@@ -20,7 +20,6 @@ export default function LoginPage() {
     }
     };
 
-
   return (
     <div style={{ maxWidth: 400, margin: '100px auto', padding: 24 }}>
       <h1>{isSignUp ? 'Sign Up' : 'Login'}</h1>
