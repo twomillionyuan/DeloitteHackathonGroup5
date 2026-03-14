@@ -1,3 +1,4 @@
+import { logOut } from "@/lib/auth";
 import { BottomNav } from "../components/BottomNav";
 import { motion } from "framer-motion";
 import { Leaf, Award, Share2, Heart, TreePine } from "lucide-react";
@@ -89,6 +90,18 @@ const ProfilePage = () => {
           <Share2 size={16} />
           Share your impact with friends
         </motion.button>
+
+        <motion.button
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.45 }}
+          whileTap={{ scale: 0.98 }}
+          onClick={logOut}
+          className="w-full card-soft p-4 flex items-center justify-center gap-2 text-destructive font-semibold text-sm hover:shadow-md transition-shadow mt-3"
+        >
+          Log out
+      </motion.button>
+
 
         {/* Sustainability Fact */}
         <motion.div
