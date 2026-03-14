@@ -24,6 +24,8 @@ const App = () => (
           <Route path="/leaderboard" element={<LeaderboardPage />} />
           <Route path="/scan" element={<ScanPage />} />
           <Route path="/stats" element={<StatsPage />} />
+          <Route path="/connect" element={<ConnectPage />} />
+          <Route path="/rewards" element={<RewardsPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
