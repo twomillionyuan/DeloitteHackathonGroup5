@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        mono: ['"IBM Plex Mono"', "monospace"],
-        sans: ['"Geist Sans"', '"Inter"', "system-ui", "sans-serif"],
+        display: ['"Nunito"', "system-ui", "sans-serif"],
+        body: ['"DM Sans"', "system-ui", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -51,9 +51,10 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        aura: {
-          gain: "hsl(var(--aura-gain))",
-          loss: "hsl(var(--aura-loss))",
+        eco: {
+          good: "hsl(var(--eco-good))",
+          bad: "hsl(var(--eco-bad))",
+          warn: "hsl(var(--eco-warn))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
@@ -80,15 +81,10 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        "scan-line": {
-          "0%": { top: "0%" },
-          "100%": { top: "100%" },
-        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "scan-line": "scan-line 2s ease-in-out infinite alternate",
       },
     },
   },

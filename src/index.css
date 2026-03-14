@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,40 +6,40 @@
 
 @layer base {
   :root {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 6%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 6%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 74 100% 50%;
-    --primary-foreground: 240 10% 3.9%;
-    --secondary: 240 5% 15%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 5% 15%;
-    --muted-foreground: 240 5% 45%;
-    --accent: 240 5% 15%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 100% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5% 26%;
-    --input: 240 5% 20%;
-    --ring: 74 100% 50%;
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 172 66% 50%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 217 91% 60%;
     --radius: 1rem;
 
-    --aura-gain: 74 100% 50%;
-    --aura-loss: 0 100% 60%;
-    --aura-gradient: linear-gradient(180deg, hsl(74, 100%, 50%) 0%, hsla(74, 100%, 50%, 0) 100%);
-    --shame-gradient: linear-gradient(180deg, hsl(0, 100%, 60%) 0%, hsla(0, 100%, 60%, 0) 100%);
+    --eco-good: 152 69% 45%;
+    --eco-bad: 0 84% 60%;
+    --eco-warn: 38 92% 50%;
+    --eco-gradient: linear-gradient(135deg, hsl(172, 66%, 50%), hsl(217, 91%, 60%));
 
-    --sidebar-background: 240 10% 3.9%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 74 100% 50%;
-    --sidebar-primary-foreground: 240 10% 3.9%;
-    --sidebar-accent: 240 5% 15%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 240 5% 26%;
-    --sidebar-ring: 74 100% 50%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 40% 96%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 214 32% 91%;
+    --sidebar-ring: 217 91% 60%;
   }
 }
 
@@ -49,41 +49,36 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Geist Sans', 'Inter', system-ui, sans-serif;
-    font-feature-settings: "tnum", "ss01";
+    font-family: 'DM Sans', system-ui, sans-serif;
   }
 }
 
 @layer utilities {
-  .font-mono-data {
-    font-family: 'IBM Plex Mono', monospace;
-    font-feature-settings: "tnum";
+  .font-display {
+    font-family: 'Nunito', system-ui, sans-serif;
   }
-  .text-aura-gain {
-    color: hsl(var(--aura-gain));
+  .font-body {
+    font-family: 'DM Sans', system-ui, sans-serif;
   }
-  .text-aura-loss {
-    color: hsl(var(--aura-loss));
+  .text-eco-good {
+    color: hsl(var(--eco-good));
   }
-  .bg-aura-gain {
-    background-color: hsl(var(--aura-gain));
+  .text-eco-bad {
+    color: hsl(var(--eco-bad));
   }
-  .bg-aura-loss {
-    background-color: hsl(var(--aura-loss));
+  .text-eco-warn {
+    color: hsl(var(--eco-warn));
   }
-  .bg-aura-gain\/10 {
-    background-color: hsl(var(--aura-gain) / 0.1);
+  .bg-eco-good {
+    background-color: hsl(var(--eco-good));
   }
-  .bg-aura-loss\/10 {
-    background-color: hsl(var(--aura-loss) / 0.1);
+  .bg-eco-bad {
+    background-color: hsl(var(--eco-bad));
   }
-  .card-surface {
-    @apply bg-card border border-border backdrop-blur-md rounded-2xl;
+  .card-soft {
+    @apply bg-card rounded-2xl shadow-sm border border-border;
   }
-  .data-label {
-    @apply text-[10px] uppercase tracking-[0.12em] text-muted-foreground font-medium;
-  }
-  .breathing-zone {
-    @apply py-12;
+  .section-label {
+    @apply text-xs uppercase tracking-widest text-muted-foreground font-semibold;
   }
 }

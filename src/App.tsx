@@ -4,11 +4,10 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Dashboard from "./pages/Dashboard";
-import LeaderboardPage from "./pages/LeaderboardPage";
-import ScanPage from "./pages/ScanPage";
+import RecipesPage from "./pages/RecipesPage";
 import StatsPage from "./pages/StatsPage";
-import ConnectPage from "./pages/ConnectPage";
-import RewardsPage from "./pages/RewardsPage";
+import LeaderboardPage from "./pages/LeaderboardPage";
+import ProfilePage from "./pages/ProfilePage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,11 +20,10 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/leaderboard" element={<LeaderboardPage />} />
-          <Route path="/scan" element={<ScanPage />} />
+          <Route path="/recipes" element={<RecipesPage />} />
           <Route path="/stats" element={<StatsPage />} />
-          <Route path="/connect" element={<ConnectPage />} />
-          <Route path="/rewards" element={<RewardsPage />} />
+          <Route path="/leaderboard" element={<LeaderboardPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

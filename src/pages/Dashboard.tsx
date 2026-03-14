@@ -1,10 +1,9 @@
-import { Odometer } from "../components/Odometer";
-import { AuraGauge } from "../components/AuraGauge";
-import { StatCard } from "../components/StatCard";
-import { ActivityFeed } from "../components/ActivityFeed";
-import { Leaderboard } from "../components/Leaderboard";
 import { BottomNav } from "../components/BottomNav";
+import { DailyTracker } from "../components/DailyTracker";
+import { QuickAdd } from "../components/QuickAdd";
+import { TodaysMeals } from "../components/TodaysMeals";
 import { motion } from "framer-motion";
+import { Leaf } from "lucide-react";
 
 const Dashboard = () => {
   return (
@@ -14,56 +13,30 @@ const Dashboard = () => {
         <motion.header
           initial={{ opacity: 0, y: -12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 400, damping: 30 }}
-          className="pt-12 pb-2"
+          className="pt-10 pb-4 flex items-center justify-between"
         >
-          <span className="data-label">Your Aura</span>
+          <div>
+            <h1 className="font-display text-2xl font-extrabold text-foreground">
+              Good morning! 🌿
+            </h1>
+            <p className="text-sm text-muted-foreground mt-0.5">
+              Let's keep it green today
+            </p>
+          </div>
+          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+            <Leaf size={20} className="text-primary" />
+          </div>
         </motion.header>
 
-        {/* Aura Score Hero */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ type: "spring", stiffness: 400, damping: 30, delay: 0.1 }}
-          className="card-surface p-6 flex items-center gap-6 mb-2"
-        >
-          <div className="h-28">
-            <AuraGauge value={84.2} />
-          </div>
-          <div className="flex-1">
-            <div className="flex items-baseline gap-1">
-              <Odometer value={84.2} className="text-5xl font-bold tracking-tighter text-foreground" />
-            </div>
-            <p className="text-sm text-muted-foreground mt-1">
-              Top <span className="text-aura-gain font-semibold">4%</span> of KTH Students
-            </p>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              +12 today · 3-day streak
-            </p>
-          </div>
-        </motion.div>
+        {/* Daily CO2 Budget */}
+        <DailyTracker />
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-2 gap-2 mb-2">
-          <StatCard label="CO₂ Saved" value="18.4" unit="kg this week" />
-          <StatCard label="Distance" value="42.7" unit="km via transit" />
-        </div>
-        <div className="grid grid-cols-2 gap-2">
-          <StatCard label="Receipts Scanned" value="12" gain={false} />
-          <StatCard label="Aura Loss" value="-27" unit="this month" gain={false} />
-        </div>
+        {/* Quick Add */}
+        <QuickAdd />
 
-        {/* Activity Feed */}
-        <div className="breathing-zone">
-          <ActivityFeed />
-        </div>
-
-        {/* Leaderboard Preview */}
-        <div className="pb-8">
-          <Leaderboard />
-        </div>
+        {/* Today's Meals */}
+        <TodaysMeals />
       </div>
-
       <BottomNav />
     </div>
   );
