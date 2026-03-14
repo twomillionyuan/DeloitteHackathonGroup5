@@ -1,4 +1,4 @@
-import { BarChart3, Home, Receipt, Trophy } from "lucide-react";
+import { BarChart3, Home, Receipt, Trophy, Plug, Gift } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -6,7 +6,8 @@ const tabs = [
   { icon: Home, label: "Home", path: "/" },
   { icon: Trophy, label: "Rank", path: "/leaderboard" },
   { icon: Receipt, label: "Scan", path: "/scan" },
-  { icon: BarChart3, label: "Stats", path: "/stats" },
+  { icon: Plug, label: "Apps", path: "/connect" },
+  { icon: Gift, label: "Rewards", path: "/rewards" },
 ];
 
 export const BottomNav = () => {

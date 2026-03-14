@@ -7,6 +7,8 @@ import Dashboard from "./pages/Dashboard";
 import LeaderboardPage from "./pages/LeaderboardPage";
 import ScanPage from "./pages/ScanPage";
 import StatsPage from "./pages/StatsPage";
+import ConnectPage from "./pages/ConnectPage";
+import RewardsPage from "./pages/RewardsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +24,8 @@ const App = () => (
           <Route path="/leaderboard" element={<LeaderboardPage />} />
           <Route path="/scan" element={<ScanPage />} />
           <Route path="/stats" element={<StatsPage />} />
+          <Route path="/connect" element={<ConnectPage />} />
+          <Route path="/rewards" element={<RewardsPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
