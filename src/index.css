@@ -47,8 +47,19 @@
   * {
     @apply border-border;
   }
+  html {
+    font-family: 'Nunito', system-ui, sans-serif;
+  }
   body {
     @apply bg-background text-foreground antialiased;
+    font-family: 'Nunito', system-ui, sans-serif;
+  }
+  button,
+  input,
+  textarea,
+  select,
+  option,
+  label {
     font-family: 'Nunito', system-ui, sans-serif;
   }
 }
@@ -87,5 +98,20 @@
   }
   .paper-panel {
     background: transparent;
+  }
+  .border {
+    border-width: 0.75px;
+  }
+  .border-t {
+    border-top-width: 0.75px;
+  }
+  .border-b {
+    border-bottom-width: 0.75px;
+  }
+  .border-l {
+    border-left-width: 0.75px;
+  }
+  .border-r {
+    border-right-width: 0.75px;
   }
 }
