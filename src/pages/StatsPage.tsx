@@ -18,10 +18,6 @@ const stats: StatItem[] = [
   { label: "Streak", value: "7", unit: "days green", icon: Flame, good: true },
 ];
 
-const weekData = [2.8, 1.9, 2.4, 1.6, 2.1, 1.8, 2.4];
-const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-const maxVal = Math.max(...weekData);
-
 const comparisons = [
   { item: "Beef Burger", co2: 3.5, emoji: "🍔" },
   { item: "Chicken Salad", co2: 1.2, emoji: "🥗" },
@@ -40,7 +36,7 @@ const StatsPage = () => {
           className="pt-10 pb-4"
         >
           <h1 className="font-display text-2xl font-extrabold text-foreground">
-            Your Impact 📊
+            Your Impact
           </h1>
           <p className="text-sm text-muted-foreground mt-1">
             See how your food choices add up
@@ -50,7 +46,7 @@ const StatsPage = () => {
         <DailyTracker />
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 gap-2 mb-4">
+        <div className="grid grid-cols-2 gap-2 mb-4 mt-6">
           {stats.map((stat, i) => {
             const Icon = stat.icon;
             return (
@@ -77,42 +73,6 @@ const StatsPage = () => {
             );
           })}
         </div>
-
-        {/* Weekly Chart */}
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="card-soft p-5 mb-4"
-        >
-          <span className="section-label mb-4 block">This Week</span>
-          <div className="flex items-end gap-2 h-32">
-            {weekData.map((val, i) => (
-              <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                <span className="text-[10px] text-muted-foreground font-medium">{val}</span>
-                <motion.div
-                  className="w-full rounded-lg bg-primary/20 relative overflow-hidden"
-                  initial={{ height: 0 }}
-                  animate={{ height: `${(val / maxVal) * 100}%` }}
-                  transition={{ delay: 0.4 + i * 0.05, type: "spring", stiffness: 200, damping: 20 }}
-                >
-                  <div
-                    className="absolute inset-0 rounded-lg"
-                    style={{
-                      background: val <= 2.0
-                        ? "hsl(var(--eco-good))"
-                        : val <= 2.5
-                        ? "hsl(var(--primary))"
-                        : "hsl(var(--eco-warn))",
-                      opacity: 0.8,
-                    }}
-                  />
-                </motion.div>
-                <span className="text-[10px] text-muted-foreground">{weekDays[i]}</span>
-              </div>
-            ))}
-          </div>
-        </motion.div>
 
         {/* Food Comparisons */}
         <motion.div

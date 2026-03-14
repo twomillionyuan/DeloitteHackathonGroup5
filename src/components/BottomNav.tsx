@@ -1,10 +1,9 @@
-import { Home, BookOpen, BarChart3, Trophy, User } from "lucide-react";
+import { Home, BarChart3, Trophy, User } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const tabs = [
   { icon: Home, label: "Home", path: "/" },
-  { icon: BookOpen, label: "Recipes", path: "/recipes" },
   { icon: BarChart3, label: "Stats", path: "/stats" },
   { icon: Trophy, label: "Rank", path: "/leaderboard" },
   { icon: User, label: "Profile", path: "/profile" },
@@ -18,7 +17,10 @@ export const BottomNav = () => {
     <nav className="fixed bottom-0 left-0 right-0 z-50 bg-card/90 backdrop-blur-xl border-t border-border">
       <div className="max-w-md mx-auto flex items-center justify-around h-16">
         {tabs.map((tab) => {
-          const active = tab.path === "/recipes" ? location.pathname.startsWith("/recipes") : location.pathname === tab.path;
+          const active =
+            tab.path === "/"
+              ? location.pathname === "/" || location.pathname.startsWith("/recipes")
+              : location.pathname === tab.path;
           return (
             <button
               key={tab.path}

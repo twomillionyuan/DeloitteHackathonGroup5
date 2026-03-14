@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Nunito:wght@400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,39 +7,39 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 227 17% 24%;
-    --card: 57 58% 95%;
-    --card-foreground: 227 17% 24%;
-    --popover: 57 58% 95%;
-    --popover-foreground: 227 17% 24%;
-    --primary: 84 38% 32%;
+    --foreground: 60 2% 11%;
+    --card: 350 55% 93%;
+    --card-foreground: 60 2% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 60 2% 11%;
+    --primary: 4 75% 52%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 57 58% 95%;
-    --secondary-foreground: 227 17% 24%;
-    --muted: 353 100% 87%;
-    --muted-foreground: 227 10% 42%;
-    --accent: 322 70% 65%;
-    --accent-foreground: 227 17% 24%;
+    --secondary: 350 55% 93%;
+    --secondary-foreground: 60 2% 11%;
+    --muted: 350 55% 93%;
+    --muted-foreground: 0 0% 43%;
+    --accent: 350 55% 93%;
+    --accent-foreground: 60 2% 11%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 53 22% 80%;
-    --input: 53 22% 80%;
-    --ring: 26 92% 56%;
+    --border: 0 0% 86%;
+    --input: 0 0% 86%;
+    --ring: 4 75% 52%;
     --radius: 1rem;
 
-    --eco-good: 84 38% 32%;
-    --eco-bad: 4 86% 58%;
-    --eco-warn: 26 92% 56%;
-    --eco-gradient: linear-gradient(135deg, hsl(26 92% 56%), hsl(4 86% 58%));
+    --eco-good: 111 39% 51%;
+    --eco-bad: 4 75% 52%;
+    --eco-warn: 4 75% 52%;
+    --eco-gradient: linear-gradient(135deg, hsl(4 75% 52%), hsl(4 78% 48%));
 
-    --sidebar-background: 57 58% 95%;
-    --sidebar-foreground: 227 17% 24%;
-    --sidebar-primary: 84 38% 32%;
+    --sidebar-background: 350 55% 93%;
+    --sidebar-foreground: 60 2% 11%;
+    --sidebar-primary: 4 75% 52%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 322 70% 65%;
-    --sidebar-accent-foreground: 227 17% 24%;
-    --sidebar-border: 53 22% 80%;
-    --sidebar-ring: 26 92% 56%;
+    --sidebar-accent: 350 55% 93%;
+    --sidebar-accent-foreground: 0 0% 14%;
+    --sidebar-border: 0 0% 86%;
+    --sidebar-ring: 4 75% 52%;
   }
 }
 
@@ -66,7 +66,7 @@
 
 @layer utilities {
   .font-display {
-    font-family: 'Nunito', system-ui, sans-serif;
+    font-family: 'Archivo Black', 'Nunito', system-ui, sans-serif;
   }
   .font-body {
     font-family: 'Nunito', system-ui, sans-serif;

@@ -7,6 +7,7 @@ export interface Recipe {
   servings: string;
   tags: string[];
   emoji: string;
+  image: string;
   mealType: "Lunch" | "Dinner";
   highlight: string;
   ingredients: string[];
@@ -23,6 +24,7 @@ export const recipes: Recipe[] = [
     servings: "2 servings",
     tags: ["Vegan", "High Protein"],
     emoji: "🍛",
+    image: "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=80",
     mealType: "Dinner",
     highlight: "Batch-cooks well for tomorrow's lunch.",
     ingredients: ["chickpeas", "spinach", "coconut milk", "rice", "curry paste", "lime"],
@@ -41,6 +43,7 @@ export const recipes: Recipe[] = [
     servings: "2 servings",
     tags: ["Veggie", "Comfort"],
     emoji: "🍄",
+    image: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?auto=format&fit=crop&w=900&q=80",
     mealType: "Dinner",
     highlight: "Rich and filling without the footprint of meat.",
     ingredients: ["arborio rice", "mushrooms", "vegetable stock", "parmesan", "onion", "parsley"],
@@ -59,6 +62,7 @@ export const recipes: Recipe[] = [
     servings: "3 servings",
     tags: ["Vegan", "Budget"],
     emoji: "🍝",
+    image: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=900&q=80",
     mealType: "Dinner",
     highlight: "A low-cost swap for traditional mince sauce.",
     ingredients: ["red lentils", "tomatoes", "spaghetti", "carrot", "celery", "oregano"],
@@ -77,6 +81,7 @@ export const recipes: Recipe[] = [
     servings: "1 serving",
     tags: ["Veggie", "Quick"],
     emoji: "🥗",
+    image: "https://images.unsplash.com/photo-1546793665-c74683f339c1?auto=format&fit=crop&w=900&q=80",
     mealType: "Lunch",
     highlight: "Fast enough for a study break or office lunch.",
     ingredients: ["halloumi", "mixed greens", "roasted peppers", "cucumber", "cherry tomatoes", "olive oil"],
@@ -95,6 +100,7 @@ export const recipes: Recipe[] = [
     servings: "2 servings",
     tags: ["Vegan", "Fun"],
     emoji: "🌮",
+    image: "https://images.unsplash.com/photo-1552332386-f8dd00dc2f85?auto=format&fit=crop&w=900&q=80",
     mealType: "Lunch",
     highlight: "Big flavor with one of the lowest CO2 scores.",
     ingredients: ["sweet potato", "tortillas", "avocado", "lime", "black beans", "smoked paprika"],
@@ -113,6 +119,7 @@ export const recipes: Recipe[] = [
     servings: "2 servings",
     tags: ["Vegan", "Asian"],
     emoji: "🥘",
+    image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=80",
     mealType: "Dinner",
     highlight: "Protein-dense and easy to make in one pan.",
     ingredients: ["tofu", "noodles", "broccoli", "carrot", "soy sauce", "sesame oil"],
@@ -131,6 +138,7 @@ export const recipes: Recipe[] = [
     servings: "1 serving",
     tags: ["Vegan", "Fast"],
     emoji: "🍞",
+    image: "https://images.unsplash.com/photo-1517673400267-0251440c45dc?auto=format&fit=crop&w=900&q=80",
     mealType: "Lunch",
     highlight: "Ten-minute lunch with almost no prep.",
     ingredients: ["white beans", "sourdough", "spinach", "lemon", "chili flakes", "olive oil"],
@@ -149,6 +157,7 @@ export const recipes: Recipe[] = [
     servings: "2 servings",
     tags: ["Vegan", "Meal Prep"],
     emoji: "🥙",
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80",
     mealType: "Lunch",
     highlight: "Easy to portion for two meals at once.",
     ingredients: ["couscous", "chickpeas", "zucchini", "carrot", "mint", "lemon"],
@@ -156,6 +165,25 @@ export const recipes: Recipe[] = [
       "Pour hot stock over couscous and cover until fluffy.",
       "Roast or saute zucchini and carrot, then fold through chickpeas.",
       "Mix vegetables into couscous with mint and lemon before serving.",
+    ],
+  },
+  {
+    id: "9",
+    name: "Soy-Ginger Chicken Noodles",
+    desc: "Chicken noodles with crunchy greens and ginger sauce",
+    co2: 1.1,
+    time: "25 min",
+    servings: "2 servings",
+    tags: ["Meat", "High Protein"],
+    emoji: "🍜",
+    image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=80",
+    mealType: "Dinner",
+    highlight: "A higher-protein option for days you want one meat meal.",
+    ingredients: ["chicken thigh", "egg noodles", "bok choy", "carrot", "ginger", "soy sauce"],
+    steps: [
+      "Cook the noodles and set them aside with a splash of the cooking water.",
+      "Sear sliced chicken with ginger until browned, then add carrot and bok choy.",
+      "Toss everything with soy sauce and the noodles until glossy and hot.",
     ],
   },
 ];
@@ -173,13 +201,24 @@ const getDaySeed = (date: Date) => {
 };
 
 export const getDailyRecipeSuggestions = (date: Date = new Date()) => {
-  const lunchRecipes = recipes.filter((recipe) => recipe.mealType === "Lunch");
-  const dinnerRecipes = recipes.filter((recipe) => recipe.mealType === "Dinner");
-  const seed = getDaySeed(date);
+  return getDailyRecipeSuggestionsWithOffset(0, date);
+};
+
+export const getDailyRecipeSuggestionsWithOffset = (offset: number, date: Date = new Date()) => {
+  const vegetarianRecipes = recipes.filter(
+    (recipe) => recipe.tags.includes("Vegan") || recipe.tags.includes("Veggie"),
+  );
+  const nonVegetarianRecipes = recipes.filter(
+    (recipe) => !recipe.tags.includes("Vegan") && !recipe.tags.includes("Veggie"),
+  );
+  const seed = getDaySeed(date) + offset;
 
   return {
-    lunch: lunchRecipes[seed % lunchRecipes.length],
-    dinner: dinnerRecipes[(seed * 3) % dinnerRecipes.length],
+    lunch: vegetarianRecipes[seed % vegetarianRecipes.length],
+    dinner:
+      nonVegetarianRecipes.length > 0
+        ? nonVegetarianRecipes[(seed * 3) % nonVegetarianRecipes.length]
+        : vegetarianRecipes[(seed * 3) % vegetarianRecipes.length],
   };
 };
 

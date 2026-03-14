@@ -1,18 +1,17 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-const DAILY_BUDGET = 6.0; // kg CO2
-const used = 2.4;
-const remaining = DAILY_BUDGET - used;
-const percentage = (used / DAILY_BUDGET) * 100;
+const DAILY_GUIDE = 6.0; // kg CO2
+const emitted = 2.4;
+const percentage = (emitted / DAILY_GUIDE) * 100;
 const weeklyStats = [
-  { day: "Mon", value: 2.8, meals: 3, emoji: "🥩", note: "Campus lunch and quick pasta dinner." },
-  { day: "Tue", value: 1.9, meals: 2, emoji: "🌱", note: "Mostly vegetarian day with leftovers." },
-  { day: "Wed", value: 2.4, meals: 3, emoji: "🌱", note: "Two home-cooked meals and one snack run." },
-  { day: "Thu", value: 1.6, meals: 2, emoji: "🌱", note: "Lowest-impact day this week." },
-  { day: "Fri", value: 2.1, meals: 3, emoji: "🥩", note: "Dinner out, but still under target." },
-  { day: "Sat", value: 1.8, meals: 2, emoji: "🌱", note: "Simple weekend cooking at home." },
-  { day: "Sun", value: 2.4, meals: 3, emoji: "🥩", note: "Meal prep day for the week ahead." },
+  { day: "Mon", value: 2.8, meals: 3, emoji: "🥩", foods: ["Chicken wrap", "Pasta bolognese", "Iced latte"] },
+  { day: "Tue", value: 1.9, meals: 2, emoji: "🌱", foods: ["Lentil soup", "Roasted veg couscous"] },
+  { day: "Wed", value: 2.4, meals: 3, emoji: "🌱", foods: ["Overnight oats", "Halloumi salad", "Bean toast"] },
+  { day: "Thu", value: 1.6, meals: 2, emoji: "🌱", foods: ["Mushroom risotto", "Green smoothie"] },
+  { day: "Fri", value: 2.1, meals: 3, emoji: "🥩", foods: ["Turkey sandwich", "Steak tacos", "Frozen yogurt"] },
+  { day: "Sat", value: 1.8, meals: 2, emoji: "🌱", foods: ["Tofu stir-fry", "Sweet potato tacos"] },
+  { day: "Sun", value: 2.4, meals: 3, emoji: "🥩", foods: ["Egg toast", "Salmon bowl", "Chicken soup"] },
 ];
 
 export const DailyTracker = () => {
@@ -26,9 +25,9 @@ export const DailyTracker = () => {
       className="mb-4 px-1 py-2"
     >
       <div className="flex items-center justify-between mb-4">
-        <span className="section-label">Today's Carbon Budget</span>
+        <span className="section-label">Today's CO₂ emitted</span>
         <span className="text-xs text-muted-foreground font-body">
-          {used.toFixed(1)} / {DAILY_BUDGET.toFixed(1)} kg CO₂
+          {emitted.toFixed(1)} kg CO₂
         </span>
       </div>
 
@@ -56,9 +55,9 @@ export const DailyTracker = () => {
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <span className="font-display text-2xl font-extrabold text-foreground">
-              {remaining.toFixed(1)}
+              {emitted.toFixed(1)}
             </span>
-            <span className="text-[10px] text-muted-foreground font-medium">kg left</span>
+            <span className="text-[10px] text-muted-foreground font-medium">kg emitted</span>
           </div>
         </div>
 
@@ -66,15 +65,15 @@ export const DailyTracker = () => {
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-eco-bad" />
             <div>
-              <p className="text-xs text-muted-foreground">Used</p>
-              <p className="font-display font-bold text-foreground">{used.toFixed(1)} kg</p>
+              <p className="text-xs text-muted-foreground">Emitted</p>
+              <p className="font-display font-bold text-foreground">{emitted.toFixed(1)} kg</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-eco-good" />
             <div>
-              <p className="text-xs text-muted-foreground">Remaining</p>
-              <p className="font-display font-bold text-eco-good">{remaining.toFixed(1)} kg</p>
+              <p className="text-xs text-muted-foreground">Daily guide</p>
+              <p className="font-display font-bold text-eco-good">{DAILY_GUIDE.toFixed(1)} kg</p>
             </div>
           </div>
         </div>
@@ -120,7 +119,16 @@ export const DailyTracker = () => {
           <p className="mt-2 text-xs text-muted-foreground">
             {selectedDay.emoji} {selectedDay.emoji === "🌱" ? "Vegetarian day" : "Meat day"}
           </p>
-          <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{selectedDay.note}</p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {selectedDay.foods.map((food) => (
+              <span
+                key={food}
+                className="rounded-full border border-border px-3 py-1 text-xs text-foreground"
+              >
+                {food}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </motion.div>

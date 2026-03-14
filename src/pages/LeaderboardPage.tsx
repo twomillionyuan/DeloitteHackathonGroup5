@@ -1,13 +1,27 @@
 import { useState } from "react";
 import { BottomNav } from "../components/BottomNav";
+import { ProfileAvatar } from "../components/ProfileAvatar";
 import { motion } from "framer-motion";
-import { Trophy } from "lucide-react";
-import { cityEntries, comparisonStats, friendEntries } from "../data/leaderboard";
+import { ArrowLeft, Trophy } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { cityEntries, comparisonStats, friendEntries, type LeaderEntry } from "../data/leaderboard";
+
+type LeaderboardLocationState = {
+  from?: string;
+};
+
+const rankEntries = (entries: LeaderEntry[]) =>
+  [...entries]
+    .sort((a, b) => a.co2 - b.co2)
+    .map((entry, index) => ({ ...entry, rank: index + 1 }));
 
 const LeaderboardPage = () => {
   const [view, setView] = useState<"friends" | "city">("friends");
-  const entries = view === "friends" ? friendEntries : cityEntries;
-  const you = entries.find((entry) => entry.isYou) ?? friendEntries.find((entry) => entry.isYou)!;
+  const location = useLocation();
+  const rankedFriendEntries = rankEntries(friendEntries);
+  const entries = view === "friends" ? rankedFriendEntries : cityEntries;
+  const you = entries.find((entry) => entry.isYou) ?? rankedFriendEntries.find((entry) => entry.isYou)!;
+  const backTo = (location.state as LeaderboardLocationState | null)?.from;
 
   return (
     <div className="min-h-screen bg-background pb-24">
@@ -17,6 +31,15 @@ const LeaderboardPage = () => {
           animate={{ opacity: 1, y: 0 }}
           className="pt-10 pb-4"
         >
+          {backTo === "/" ? (
+            <Link
+              to={backTo}
+              className="mb-4 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
+              <ArrowLeft size={16} />
+              Back to dashboard
+            </Link>
+          ) : null}
           <div className="flex items-center gap-2">
             <Trophy size={20} className="text-primary" />
             <h1 className="font-display text-2xl font-extrabold text-foreground">Leaderboard</h1>
@@ -48,7 +71,7 @@ const LeaderboardPage = () => {
           transition={{ delay: 0.12 }}
           className="pb-6"
         >
-          <span className="section-label">Your stats vs the average person</span>
+          <span className="section-label">Stats</span>
           <div className="mt-4 grid grid-cols-3 gap-3">
             {comparisonStats.map((stat, index) => (
               <motion.div
@@ -94,7 +117,6 @@ const LeaderboardPage = () => {
               </button>
             </div>
           </div>
-
           <div className="mt-4">
             {entries.map((entry, index) => (
               <motion.div
@@ -102,23 +124,33 @@ const LeaderboardPage = () => {
                 initial={{ opacity: 0, x: -12 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.18 + index * 0.04 }}
-                className={`flex items-center gap-3 border-b border-border px-1 py-3 last:border-b-0 ${
-                  entry.isYou ? "text-primary" : ""
-                }`}
+                className="border-b border-border px-1 last:border-b-0"
               >
-                <span className="w-8 text-center font-display text-sm font-extrabold text-muted-foreground">
-                  #{entry.rank}
-                </span>
-                <img
-                  src={entry.avatarUrl}
-                  alt={`${entry.name} profile`}
-                  className="h-10 w-10 rounded-full border border-border object-cover"
-                />
-                <div className="flex-1">
-                  <p className={`text-sm font-semibold ${entry.isYou ? "text-primary" : "text-foreground"}`}>{entry.name}</p>
-                  <p className="text-xs text-muted-foreground">{entry.streak} day streak</p>
-                </div>
-                <span className="font-display text-sm font-bold text-foreground">{entry.co2} kg</span>
+                <Link
+                  to={entry.isYou ? "/profile" : `/people/${entry.id}`}
+                  state={{ from: "/leaderboard" }}
+                  className={`flex items-center gap-3 py-3 ${
+                    entry.isYou ? "text-primary" : ""
+                  }`}
+                >
+                  <span className="w-8 text-center font-display text-sm font-extrabold text-muted-foreground">
+                    #{entry.rank}
+                  </span>
+                  {entry.isYou ? (
+                    <ProfileAvatar className="h-10 w-10 border border-border" />
+                  ) : (
+                    <img
+                      src={entry.avatarUrl}
+                      alt={`${entry.name} profile`}
+                      className="h-10 w-10 rounded-full border border-border object-cover"
+                    />
+                  )}
+                  <div className="flex-1">
+                    <p className={`text-sm font-semibold ${entry.isYou ? "text-primary" : "text-foreground"}`}>{entry.name}</p>
+                    <p className="text-xs text-muted-foreground">{entry.streak} day streak</p>
+                  </div>
+                  <span className="font-display text-sm font-bold text-foreground">{entry.co2} kg</span>
+                </Link>
               </motion.div>
             ))}
           </div>
