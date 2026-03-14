@@ -18,7 +18,7 @@ export const BottomNav = () => {
     <nav className="fixed bottom-0 left-0 right-0 z-50 bg-card/90 backdrop-blur-xl border-t border-border">
       <div className="max-w-md mx-auto flex items-center justify-around h-16">
         {tabs.map((tab) => {
-          const active = location.pathname === tab.path;
+          const active = tab.path === "/recipes" ? location.pathname.startsWith("/recipes") : location.pathname === tab.path;
           return (
             <button
               key={tab.path}

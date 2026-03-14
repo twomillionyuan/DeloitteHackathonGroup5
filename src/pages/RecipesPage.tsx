@@ -1,33 +1,13 @@
 import { BottomNav } from "../components/BottomNav";
+import { PantryRecipeGenerator } from "../components/PantryRecipeGenerator";
 import { motion } from "framer-motion";
 import { Clock, Leaf, ChevronRight, Sparkles } from "lucide-react";
-
-interface Recipe {
-  id: string;
-  name: string;
-  desc: string;
-  co2: number;
-  time: string;
-  tags: string[];
-  emoji: string;
-}
-
-const recipes: Recipe[] = [
-  { id: "1", name: "Chickpea Curry Bowl", desc: "Creamy coconut curry with spinach and rice", co2: 0.4, time: "25 min", tags: ["Vegan", "High Protein"], emoji: "🍛" },
-  { id: "2", name: "Mushroom Risotto", desc: "Creamy arborio rice with mixed mushrooms", co2: 0.5, time: "35 min", tags: ["Veggie", "Comfort"], emoji: "🍄" },
-  { id: "3", name: "Lentil Bolognese", desc: "Rich tomato sauce with red lentils and herbs", co2: 0.3, time: "30 min", tags: ["Vegan", "Budget"], emoji: "🍝" },
-  { id: "4", name: "Grilled Halloumi Salad", desc: "Mediterranean salad with roasted vegetables", co2: 0.7, time: "15 min", tags: ["Veggie", "Quick"], emoji: "🥗" },
-  { id: "5", name: "Sweet Potato Tacos", desc: "Spiced sweet potato with avocado crema", co2: 0.3, time: "20 min", tags: ["Vegan", "Fun"], emoji: "🌮" },
-  { id: "6", name: "Tofu Stir-Fry", desc: "Sesame tofu with crunchy vegetables and noodles", co2: 0.4, time: "20 min", tags: ["Vegan", "Asian"], emoji: "🥘" },
-];
-
-const getCo2Label = (co2: number) => {
-  if (co2 <= 0.4) return { text: "Super Low", className: "text-eco-good bg-eco-good/10" };
-  if (co2 <= 0.7) return { text: "Low", className: "text-accent bg-accent/10" };
-  return { text: "Moderate", className: "text-eco-warn bg-[hsl(var(--eco-warn)/0.1)]" };
-};
+import { Link } from "react-router-dom";
+import { getCo2Label, recipes } from "../data/recipes";
 
 const RecipesPage = () => {
+  const featuredRecipe = recipes[0];
+
   return (
     <div className="min-h-screen bg-background pb-24">
       <div className="max-w-md mx-auto px-4">
@@ -50,29 +30,36 @@ const RecipesPage = () => {
           initial={{ opacity: 0, scale: 0.97 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.1 }}
-          className="card-soft p-5 mb-4 overflow-hidden relative"
-          style={{ background: "var(--eco-gradient)" }}
+          className="mb-4"
         >
-          <div className="relative z-10">
-            <span className="text-xs font-semibold text-primary-foreground/80 uppercase tracking-wider">
-              Today's Pick
-            </span>
-            <h2 className="font-display text-xl font-extrabold text-primary-foreground mt-1">
-              🍛 Chickpea Curry Bowl
-            </h2>
-            <p className="text-sm text-primary-foreground/80 mt-1">
-              Only 0.4 kg CO₂ — that's 85% less than a beef dish!
-            </p>
-            <div className="flex items-center gap-3 mt-3">
-              <span className="text-xs bg-white/20 rounded-full px-3 py-1 text-primary-foreground font-medium">
-                25 min
+          <Link
+            to={`/recipes/${featuredRecipe.id}`}
+            className="card-soft relative block overflow-hidden p-5 transition-transform hover:-translate-y-0.5"
+            style={{ background: "var(--eco-gradient)" }}
+          >
+            <div className="relative z-10">
+              <span className="text-xs font-semibold uppercase tracking-wider text-primary-foreground/80">
+                Today's Pick
               </span>
-              <span className="text-xs bg-white/20 rounded-full px-3 py-1 text-primary-foreground font-medium">
-                Vegan
-              </span>
+              <h2 className="mt-1 font-display text-xl font-extrabold text-primary-foreground">
+                {featuredRecipe.emoji} {featuredRecipe.name}
+              </h2>
+              <p className="mt-1 text-sm text-primary-foreground/80">
+                Only {featuredRecipe.co2} kg CO₂. {featuredRecipe.highlight}
+              </p>
+              <div className="mt-3 flex items-center gap-3">
+                <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-primary-foreground">
+                  {featuredRecipe.time}
+                </span>
+                <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-primary-foreground">
+                  {featuredRecipe.tags[0]}
+                </span>
+              </div>
             </div>
-          </div>
+          </Link>
         </motion.div>
+
+        <PantryRecipeGenerator />
 
         {/* Recipe List */}
         <span className="section-label mb-3 block">All Recipes</span>
@@ -85,22 +72,27 @@ const RecipesPage = () => {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.15 + i * 0.05 }}
-                className="card-soft p-4 flex items-center gap-3 cursor-pointer hover:shadow-md transition-shadow"
+                className="transition-transform hover:-translate-y-0.5"
               >
-                <span className="text-3xl">{recipe.emoji}</span>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-foreground">{recipe.name}</p>
-                  <p className="text-xs text-muted-foreground truncate">{recipe.desc}</p>
-                  <div className="flex items-center gap-2 mt-1.5">
-                    <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${co2Info.className}`}>
-                      {recipe.co2} kg CO₂ · {co2Info.text}
-                    </span>
-                    <span className="text-[10px] text-muted-foreground flex items-center gap-0.5">
-                      <Clock size={10} /> {recipe.time}
-                    </span>
+                <Link
+                  to={`/recipes/${recipe.id}`}
+                  className="card-soft flex items-center gap-3 p-4 transition-shadow hover:shadow-md"
+                >
+                  <span className="text-3xl">{recipe.emoji}</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-foreground">{recipe.name}</p>
+                    <p className="truncate text-xs text-muted-foreground">{recipe.desc}</p>
+                    <div className="mt-1.5 flex items-center gap-2">
+                      <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${co2Info.className}`}>
+                        {recipe.co2} kg CO₂ · {co2Info.text}
+                      </span>
+                      <span className="flex items-center gap-0.5 text-[10px] text-muted-foreground">
+                        <Clock size={10} /> {recipe.time}
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <ChevronRight size={16} className="text-muted-foreground shrink-0" />
+                  <ChevronRight size={16} className="shrink-0 text-muted-foreground" />
+                </Link>
               </motion.div>
             );
           })}
