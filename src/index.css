@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,40 +6,40 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 222 47% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 217 91% 60%;
+    --background: 0 0% 100%;
+    --foreground: 227 17% 24%;
+    --card: 57 58% 95%;
+    --card-foreground: 227 17% 24%;
+    --popover: 57 58% 95%;
+    --popover-foreground: 227 17% 24%;
+    --primary: 84 38% 32%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 172 66% 50%;
-    --accent-foreground: 0 0% 100%;
+    --secondary: 57 58% 95%;
+    --secondary-foreground: 227 17% 24%;
+    --muted: 353 100% 87%;
+    --muted-foreground: 227 10% 42%;
+    --accent: 322 70% 65%;
+    --accent-foreground: 227 17% 24%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 217 91% 60%;
+    --border: 53 22% 80%;
+    --input: 53 22% 80%;
+    --ring: 26 92% 56%;
     --radius: 1rem;
 
-    --eco-good: 152 69% 45%;
-    --eco-bad: 0 84% 60%;
-    --eco-warn: 38 92% 50%;
-    --eco-gradient: linear-gradient(135deg, hsl(172, 66%, 50%), hsl(217, 91%, 60%));
+    --eco-good: 84 38% 32%;
+    --eco-bad: 4 86% 58%;
+    --eco-warn: 26 92% 56%;
+    --eco-gradient: linear-gradient(135deg, hsl(26 92% 56%), hsl(4 86% 58%));
 
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 222 47% 11%;
-    --sidebar-primary: 217 91% 60%;
+    --sidebar-background: 57 58% 95%;
+    --sidebar-foreground: 227 17% 24%;
+    --sidebar-primary: 84 38% 32%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 40% 96%;
-    --sidebar-accent-foreground: 222 47% 11%;
-    --sidebar-border: 214 32% 91%;
-    --sidebar-ring: 217 91% 60%;
+    --sidebar-accent: 322 70% 65%;
+    --sidebar-accent-foreground: 227 17% 24%;
+    --sidebar-border: 53 22% 80%;
+    --sidebar-ring: 26 92% 56%;
   }
 }
 
@@ -47,9 +47,20 @@
   * {
     @apply border-border;
   }
+  html {
+    font-family: 'Nunito', system-ui, sans-serif;
+  }
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'DM Sans', system-ui, sans-serif;
+    font-family: 'Nunito', system-ui, sans-serif;
+  }
+  button,
+  input,
+  textarea,
+  select,
+  option,
+  label {
+    font-family: 'Nunito', system-ui, sans-serif;
   }
 }
 
@@ -58,7 +69,7 @@
     font-family: 'Nunito', system-ui, sans-serif;
   }
   .font-body {
-    font-family: 'DM Sans', system-ui, sans-serif;
+    font-family: 'Nunito', system-ui, sans-serif;
   }
   .text-eco-good {
     color: hsl(var(--eco-good));
@@ -76,9 +87,31 @@
     background-color: hsl(var(--eco-bad));
   }
   .card-soft {
-    @apply bg-card rounded-2xl shadow-sm border border-border;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
   }
   .section-label {
-    @apply text-xs uppercase tracking-widest text-muted-foreground font-semibold;
+    @apply text-[11px] uppercase font-semibold text-muted-foreground;
+    letter-spacing: 0.18em;
+  }
+  .paper-panel {
+    background: transparent;
+  }
+  .border {
+    border-width: 0.75px;
+  }
+  .border-t {
+    border-top-width: 0.75px;
+  }
+  .border-b {
+    border-bottom-width: 0.75px;
+  }
+  .border-l {
+    border-left-width: 0.75px;
+  }
+  .border-r {
+    border-right-width: 0.75px;
   }
 }

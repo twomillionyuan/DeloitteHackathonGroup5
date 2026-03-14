@@ -3,13 +3,13 @@ import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { ChefHat, Loader2, Sparkles, WandSparkles } from "lucide-react";
+import { ChefHat, Loader2, Sparkles } from "lucide-react";
 import { generatePantryRecipe, parsePantryIngredients, type PantryRecipe } from "@/lib/pantry-recipe";
 
 const hasApiConfigured = Boolean(import.meta.env.VITE_RECIPE_API_URL?.trim());
 
 export const PantryRecipeGenerator = () => {
-  const [input, setInput] = useState("spinach, chickpeas, rice, tomatoes");
+  const [input, setInput] = useState("");
   const [recipe, setRecipe] = useState<PantryRecipe | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -41,35 +41,32 @@ export const PantryRecipeGenerator = () => {
         transition={{ delay: 0.35 }}
         className="card-soft overflow-hidden"
       >
-        <div className="border-b border-border bg-secondary/40 p-5">
+        <div className="paper-panel border-b border-border p-5">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <div className="flex items-center gap-2">
-                <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                  <WandSparkles size={18} />
-                </span>
-                <div>
-                  <h2 className="font-display text-lg font-extrabold text-foreground">AI pantry recipe</h2>
-                  <p className="text-sm text-muted-foreground">
-                    Tell the app what you already have, and it builds a recipe to save food.
-                  </p>
-                </div>
-              </div>
+              <span className="section-label">Pantry match</span>
+              <h2 className="mt-2 font-display text-[1.6rem] leading-none text-foreground">
+                Start with what you have.
+              </h2>
             </div>
-            <Badge variant="secondary" className="shrink-0">
-              {hasApiConfigured ? "API mode" : "Local AI mode"}
+            <Badge variant="secondary" className="shrink-0 rounded-full bg-background/80">
+              {hasApiConfigured ? "API" : "Built in"}
             </Badge>
           </div>
         </div>
 
         <div className="p-5">
-          <label className="section-label mb-3 block">What is at home?</label>
-          <Textarea
-            value={input}
-            onChange={(event) => setInput(event.target.value)}
-            placeholder="Try: tomatoes, half an onion, rice, spinach, yogurt"
-            className="min-h-[110px] resize-none rounded-2xl"
-          />
+          <div className="rounded-[24px] border border-border bg-background/70 p-4">
+            <div className="flex items-center justify-between gap-3">
+              <label className="section-label">What is at home?</label>
+            </div>
+            <Textarea
+              value={input}
+              onChange={(event) => setInput(event.target.value)}
+              placeholder="Try: tomatoes, half an onion, rice, spinach, yogurt"
+              className="mt-3 min-h-[118px] resize-none rounded-[20px] border-0 bg-secondary/70 px-4 py-3 shadow-none focus-visible:ring-1"
+            />
+          </div>
 
           <div className="mt-3 flex flex-wrap gap-2">
             {pantryPreview.slice(0, 6).map((item) => (
@@ -77,26 +74,18 @@ export const PantryRecipeGenerator = () => {
                 {item}
               </Badge>
             ))}
-            {pantryPreview.length === 0 && (
-              <span className="text-xs text-muted-foreground">
-                Add ingredients separated by commas or new lines.
-              </span>
-            )}
           </div>
 
-          <div className="mt-4 flex items-center justify-between gap-3">
-            <p className="text-xs leading-relaxed text-muted-foreground">
-              Uses your current pantry first. If `VITE_RECIPE_API_URL` is configured, this panel can call your backend instead of the local generator.
-            </p>
+          <div className="mt-4 flex justify-end">
             <Button
               type="button"
               size="lg"
-              className="shrink-0 rounded-xl"
+              className="shrink-0 rounded-full px-5"
               onClick={handleGenerate}
               disabled={isLoading || pantryPreview.length === 0}
             >
               {isLoading ? <Loader2 className="animate-spin" /> : <Sparkles />}
-              Generate
+              Draft recipe
             </Button>
           </div>
 
@@ -110,16 +99,15 @@ export const PantryRecipeGenerator = () => {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mt-5 rounded-[24px] border border-border bg-background p-5"
+              className="mt-5 rounded-[26px] border border-border bg-background/85 p-5"
             >
-              <div className="flex items-start justify-between gap-4">
+              <div className="flex items-start justify-between gap-4 border-b border-border pb-4">
                 <div>
                   <div className="flex items-center gap-2">
                     <ChefHat size={16} className="text-primary" />
-                    <span className="section-label">Generated recipe</span>
+                    <span className="section-label">Suggested dish</span>
                   </div>
-                  <h3 className="mt-2 font-display text-xl font-extrabold text-foreground">{recipe.title}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">{recipe.summary}</p>
+                  <h3 className="mt-2 font-display text-[1.5rem] leading-none text-foreground">{recipe.title}</h3>
                 </div>
                 <Badge className="shrink-0 rounded-full bg-eco-good/10 text-eco-good hover:bg-eco-good/10">
                   {recipe.co2Kg} kg CO₂
@@ -127,7 +115,7 @@ export const PantryRecipeGenerator = () => {
               </div>
 
               <div className="mt-4">
-                <p className="section-label mb-2 block">Use first</p>
+                <p className="section-label mb-2 block">Start with these</p>
                 <div className="flex flex-wrap gap-2">
                   {recipe.ingredientsUsed.map((item) => (
                     <Badge key={item} variant="secondary" className="rounded-full">
@@ -137,11 +125,11 @@ export const PantryRecipeGenerator = () => {
                 </div>
               </div>
 
-              <div className="mt-4">
-                <p className="section-label mb-2 block">Steps</p>
+              <div className="mt-5">
+                <p className="section-label mb-2 block">Method</p>
                 <div className="space-y-2">
                   {recipe.steps.map((step, index) => (
-                    <div key={step} className="flex gap-3 rounded-2xl bg-secondary/60 p-3">
+                    <div key={step} className="paper-panel flex gap-3 rounded-2xl border border-border p-3">
                       <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
                         {index + 1}
                       </span>
@@ -152,11 +140,11 @@ export const PantryRecipeGenerator = () => {
               </div>
 
               <div className="mt-4 grid gap-3 md:grid-cols-2">
-                <div className="rounded-2xl bg-secondary/60 p-4">
-                  <p className="section-label mb-2 block">Food-saving tip</p>
+                <div className="paper-panel rounded-2xl border border-border p-4">
+                  <p className="section-label mb-2 block">Waste-saving note</p>
                   <p className="text-sm leading-relaxed text-foreground">{recipe.wasteTip}</p>
                 </div>
-                <div className="rounded-2xl bg-secondary/60 p-4">
+                <div className="paper-panel rounded-2xl border border-border p-4">
                   <p className="section-label mb-2 block">Leftover plan</p>
                   <p className="text-sm leading-relaxed text-foreground">{recipe.leftoverPlan}</p>
                 </div>
