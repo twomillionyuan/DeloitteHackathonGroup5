@@ -2,12 +2,19 @@ import { BottomNav } from "../components/BottomNav";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { ArrowLeft, Clock3, Users } from "lucide-react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useLocation, useParams } from "react-router-dom";
 import { getRecipeById } from "../data/recipes";
+
+type RecipeDetailLocationState = {
+  from?: string;
+};
 
 const RecipeDetailPage = () => {
   const { recipeId } = useParams();
+  const location = useLocation();
   const recipe = getRecipeById(recipeId);
+  const backTo = (location.state as RecipeDetailLocationState | null)?.from ?? "/recipes";
+  const backLabel = backTo === "/" ? "Back to dashboard" : "Back to recipes";
 
   if (!recipe) {
     return <Navigate to="/recipes" replace />;
@@ -21,11 +28,11 @@ const RecipeDetailPage = () => {
           className="pt-10 pb-4"
         >
           <Link
-            to="/recipes"
+            to={backTo}
             className="mb-4 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
             <ArrowLeft size={16} />
-            Back to recipes
+            {backLabel}
           </Link>
 
           <div className="card-soft paper-panel p-5">

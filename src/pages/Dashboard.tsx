@@ -1,6 +1,6 @@
 import { BottomNav } from "../components/BottomNav";
 import { DailyRecipeSuggestions } from "../components/DailyRecipeSuggestions";
-import { DailyTracker } from "../components/DailyTracker";
+import { FriendsLeaderboardPreview } from "../components/FriendsLeaderboardPreview";
 import { motion } from "framer-motion";
 import { CalendarDays } from "lucide-react";
 
@@ -31,7 +31,7 @@ const Dashboard = () => {
         </motion.header>
 
         <div className="mt-4">
-          <DailyTracker />
+          <FriendsLeaderboardPreview />
         </div>
 
         <div className="mt-4">
