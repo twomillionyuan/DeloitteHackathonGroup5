@@ -1,4 +1,5 @@
 import { BottomNav } from "../components/BottomNav";
+import { DailyTracker } from "../components/DailyTracker";
 import { motion } from "framer-motion";
 import { TrendingDown, Award, Target, Flame } from "lucide-react";
 
@@ -45,6 +46,8 @@ const StatsPage = () => {
             See how your food choices add up
           </p>
         </motion.header>
+
+        <DailyTracker />
 
         {/* Stats Grid */}
         <div className="grid grid-cols-2 gap-2 mb-4">
