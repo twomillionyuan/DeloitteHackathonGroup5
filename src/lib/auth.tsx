@@ -15,6 +15,7 @@ export const signUp = async (email: string, password: string, name: string) => {
     name,
     email,
     createdAt: new Date().toISOString(),
+    quizCompleted: false,
   });
 
   return user;

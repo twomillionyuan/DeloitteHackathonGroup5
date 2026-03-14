@@ -19,6 +19,7 @@ const queryClient = new QueryClient();
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
   return user ? <>{children}</> : <Navigate to="/login" />;
+  
 }
 
 const App = () => (
