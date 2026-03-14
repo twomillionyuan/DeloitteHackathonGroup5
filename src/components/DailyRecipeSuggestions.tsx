@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { getDailyRecipeSuggestions } from "../data/recipes";
-
+import { getCo2Label, getDailyRecipeSuggestions } from "../data/recipes";
+import { useEffect, useState } from "react";
 const todaysSuggestions = getDailyRecipeSuggestions();
 const dateLabel = new Intl.DateTimeFormat("en-US", {
   weekday: "long",
@@ -10,10 +10,30 @@ const dateLabel = new Intl.DateTimeFormat("en-US", {
 }).format(new Date());
 
 export const DailyRecipeSuggestions = () => {
+  const [recipes, setRecipes] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/daily-recipe?target_calories=500")
+      .then((res) => res.json())
+      .then((data) => {
+        setRecipes(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch recipes:", err);
+        setLoading(false);
+      });
+  }, []);
+
   const meals = [
-    { slot: "Option 1", recipe: todaysSuggestions.lunch },
-    { slot: "Option 2", recipe: todaysSuggestions.dinner },
+    { slot: "Lunch", recipe: recipes[0] },
+    { slot: "Dinner", recipe: recipes[1] },
   ];
+
+  if (loading) return <p className="text-muted-foreground text-sm">Loading today's recipes...</p>;
+  if (!recipes.length) return <p className="text-muted-foreground text-sm">No recipes found.</p>;
+
 
   return (
     <section>

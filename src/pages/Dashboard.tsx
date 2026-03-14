@@ -2,9 +2,12 @@ import { BottomNav } from "../components/BottomNav";
 import { DailyRecipeSuggestions } from "../components/DailyRecipeSuggestions";
 import { FriendsLeaderboardPreview } from "../components/FriendsLeaderboardPreview";
 import { motion } from "framer-motion";
-import { CalendarDays } from "lucide-react";
+import { ChefHat, Leaf, CalendarDays } from "lucide-react";
+import { useAuth } from '../context/AuthContext';
+import { logOut } from '../lib/auth';
 
 const Dashboard = () => {
+  const { user } = useAuth();
   const todayLabel = new Intl.DateTimeFormat("en-US", {
     weekday: "long",
     month: "long",
@@ -14,6 +17,8 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-background pb-24">
       <div className="max-w-md mx-auto px-4">
+        <p>Logged in as: <strong>{user?.email}</strong></p>
+
         <motion.header
           initial={{ opacity: 0, y: -12 }}
           animate={{ opacity: 1, y: 0 }}
