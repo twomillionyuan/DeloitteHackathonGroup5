@@ -6,13 +6,13 @@ const used = 2.4;
 const remaining = DAILY_BUDGET - used;
 const percentage = (used / DAILY_BUDGET) * 100;
 const weeklyStats = [
-  { day: "Mon", value: 2.8, meals: 3, note: "Campus lunch and quick pasta dinner." },
-  { day: "Tue", value: 1.9, meals: 2, note: "Mostly vegetarian day with leftovers." },
-  { day: "Wed", value: 2.4, meals: 3, note: "Two home-cooked meals and one snack run." },
-  { day: "Thu", value: 1.6, meals: 2, note: "Lowest-impact day this week." },
-  { day: "Fri", value: 2.1, meals: 3, note: "Dinner out, but still under target." },
-  { day: "Sat", value: 1.8, meals: 2, note: "Simple weekend cooking at home." },
-  { day: "Sun", value: 2.4, meals: 3, note: "Meal prep day for the week ahead." },
+  { day: "Mon", value: 2.8, meals: 3, emoji: "🥩", note: "Campus lunch and quick pasta dinner." },
+  { day: "Tue", value: 1.9, meals: 2, emoji: "🌱", note: "Mostly vegetarian day with leftovers." },
+  { day: "Wed", value: 2.4, meals: 3, emoji: "🌱", note: "Two home-cooked meals and one snack run." },
+  { day: "Thu", value: 1.6, meals: 2, emoji: "🌱", note: "Lowest-impact day this week." },
+  { day: "Fri", value: 2.1, meals: 3, emoji: "🥩", note: "Dinner out, but still under target." },
+  { day: "Sat", value: 1.8, meals: 2, emoji: "🌱", note: "Simple weekend cooking at home." },
+  { day: "Sun", value: 2.4, meals: 3, emoji: "🥩", note: "Meal prep day for the week ahead." },
 ];
 
 export const DailyTracker = () => {
@@ -45,7 +45,7 @@ export const DailyTracker = () => {
             <motion.circle
               cx="50" cy="50" r="42"
               fill="none"
-              stroke="hsl(var(--accent))"
+              stroke="hsl(var(--eco-bad))"
               strokeWidth="8"
               strokeLinecap="round"
               strokeDasharray={`${2 * Math.PI * 42}`}
@@ -64,7 +64,7 @@ export const DailyTracker = () => {
 
         <div className="flex-1 space-y-3">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-accent" />
+            <div className="w-3 h-3 rounded-full bg-eco-bad" />
             <div>
               <p className="text-xs text-muted-foreground">Used</p>
               <p className="font-display font-bold text-foreground">{used.toFixed(1)} kg</p>
@@ -105,18 +105,21 @@ export const DailyTracker = () => {
               <p className={`font-body text-sm font-semibold ${selectedDay.day === stat.day ? "text-primary" : "text-foreground"}`}>
                 {stat.value}
               </p>
-              <p className={`mt-3 text-xs ${selectedDay.day === stat.day ? "text-primary" : "text-muted-foreground"}`}>{stat.day}</p>
+              <p className="mt-2 text-sm leading-none">{stat.emoji}</p>
+              <p className={`mt-2 text-xs ${selectedDay.day === stat.day ? "text-primary" : "text-muted-foreground"}`}>{stat.day}</p>
             </motion.button>
           ))}
         </div>
 
         <div className="mt-4 border-t border-border pt-4">
           <div className="flex items-center justify-between gap-3">
-            <p className="text-sm font-semibold text-foreground">{selectedDay.day}</p>
             <p className="text-xs text-muted-foreground">
               {selectedDay.value.toFixed(1)} kg CO₂ · {selectedDay.meals} meals
             </p>
           </div>
+          <p className="mt-2 text-xs text-muted-foreground">
+            {selectedDay.emoji} {selectedDay.emoji === "🌱" ? "Vegetarian day" : "Meat day"}
+          </p>
           <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{selectedDay.note}</p>
         </div>
       </div>

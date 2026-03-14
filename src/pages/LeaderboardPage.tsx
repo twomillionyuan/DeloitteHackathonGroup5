@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { BottomNav } from "../components/BottomNav";
 import { motion } from "framer-motion";
-import { Trophy, Medal, Crown, TrendingDown } from "lucide-react";
+import { Trophy } from "lucide-react";
 
 interface LeaderEntry {
   rank: number;
@@ -8,27 +9,37 @@ interface LeaderEntry {
   co2: number;
   streak: number;
   isYou?: boolean;
-  avatar: string;
+  avatarUrl: string;
 }
 
-const entries: LeaderEntry[] = [
-  { rank: 1, name: "Saga L.", co2: 9.8, streak: 14, avatar: "🌱" },
-  { rank: 2, name: "Elias N.", co2: 11.2, streak: 10, avatar: "🌿" },
-  { rank: 3, name: "You", co2: 14.2, streak: 7, isYou: true, avatar: "🍃" },
-  { rank: 4, name: "Wilma Ö.", co2: 15.8, streak: 5, avatar: "🌻" },
-  { rank: 5, name: "Leo K.", co2: 18.3, streak: 3, avatar: "🌾" },
-  { rank: 6, name: "Nora S.", co2: 20.1, streak: 2, avatar: "🪴" },
-  { rank: 7, name: "Oscar B.", co2: 22.4, streak: 1, avatar: "🌸" },
+const friendEntries: LeaderEntry[] = [
+  { rank: 1, name: "Saga L.", co2: 9.8, streak: 14, avatarUrl: "/avatars/IMG_6269.jpg" },
+  { rank: 2, name: "Elias N.", co2: 11.2, streak: 10, avatarUrl: "/avatars/IMG_6265.jpg" },
+  { rank: 3, name: "You", co2: 14.2, streak: 7, isYou: true, avatarUrl: "/avatars/IMG_6266.jpg" },
+  { rank: 4, name: "Wilma Ö.", co2: 15.8, streak: 5, avatarUrl: "/avatars/IMG_6267.jpg" },
+  { rank: 5, name: "Leo K.", co2: 18.3, streak: 3, avatarUrl: "/avatars/IMG_6270.jpg" },
 ];
 
-const getRankIcon = (rank: number) => {
-  if (rank === 1) return <Crown size={16} className="text-[hsl(45,100%,55%)]" />;
-  if (rank === 2) return <Medal size={16} className="text-muted-foreground" />;
-  if (rank === 3) return <Medal size={16} className="text-[hsl(25,70%,50%)]" />;
-  return null;
-};
+const cityEntries: LeaderEntry[] = [
+  { rank: 1, name: "Nora S.", co2: 8.9, streak: 11, avatarUrl: "/avatars/IMG_6267.jpg" },
+  { rank: 2, name: "Amir T.", co2: 10.4, streak: 6, avatarUrl: "/avatars/IMG_6270.jpg" },
+  { rank: 3, name: "Saga L.", co2: 10.9, streak: 14, avatarUrl: "/avatars/IMG_6269.jpg" },
+  { rank: 4, name: "You", co2: 14.2, streak: 7, isYou: true, avatarUrl: "/avatars/IMG_6266.jpg" },
+  { rank: 5, name: "Mira K.", co2: 14.6, streak: 4, avatarUrl: "/avatars/IMG_6265.jpg" },
+  { rank: 6, name: "Leo K.", co2: 18.3, streak: 3, avatarUrl: "/avatars/IMG_6270.jpg" },
+];
+
+const comparisonStats = [
+  { label: "You", value: "14.2 kg", detail: "this week" },
+  { label: "Average person", value: "18.6 kg", detail: "this week" },
+  { label: "Difference", value: "-4.4 kg", detail: "below average" },
+];
 
 const LeaderboardPage = () => {
+  const [view, setView] = useState<"friends" | "city">("friends");
+  const entries = view === "friends" ? friendEntries : cityEntries;
+  const you = entries.find((entry) => entry.isYou) ?? friendEntries.find((entry) => entry.isYou)!;
+
   return (
     <div className="min-h-screen bg-background pb-24">
       <div className="max-w-md mx-auto px-4">
@@ -37,70 +48,112 @@ const LeaderboardPage = () => {
           animate={{ opacity: 1, y: 0 }}
           className="pt-10 pb-4"
         >
-          <h1 className="font-display text-2xl font-extrabold text-foreground flex items-center gap-2">
-            <Trophy size={22} className="text-primary" />
-            Leaderboard
-          </h1>
-          <p className="text-sm text-muted-foreground mt-1">
-            Lowest weekly CO₂ from food wins 🏆
-          </p>
+          <div className="flex items-center gap-2">
+            <Trophy size={20} className="text-primary" />
+            <h1 className="font-display text-2xl font-extrabold text-foreground">Leaderboard</h1>
+          </div>
+          <p className="mt-2 text-sm text-muted-foreground">Rank is based on weekly CO₂ only. Streak does not affect rank.</p>
         </motion.header>
 
-        {/* Your Position Card */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.97 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.1 }}
-          className="card-soft p-5 mb-4 border-primary/30"
+        <motion.section
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.08 }}
+          className="pb-5"
         >
-          <div className="flex items-center justify-between">
+          <div className="flex items-end justify-between gap-3 border-b border-border pb-4">
             <div>
-              <span className="section-label">Your Rank</span>
-              <p className="font-display text-4xl font-extrabold text-foreground mt-1">#3</p>
+              <span className="section-label">Your place</span>
+              <p className="mt-2 font-display text-[1.9rem] leading-none text-foreground">#{you.rank}</p>
             </div>
             <div className="text-right">
-              <span className="section-label">Weekly CO₂</span>
-              <p className="font-display text-2xl font-extrabold text-eco-good mt-1">14.2 kg</p>
+              <span className="section-label">Streak</span>
+              <p className="mt-2 font-display text-[1.4rem] leading-none text-foreground">{you.streak} days</p>
             </div>
           </div>
-          <div className="flex items-center gap-2 mt-3 p-2 rounded-lg bg-primary/5">
-            <TrendingDown size={14} className="text-primary" />
-            <span className="text-xs text-muted-foreground">
-              <span className="font-semibold text-primary">2.8 kg less</span> than last week!
-            </span>
-          </div>
-        </motion.div>
+        </motion.section>
 
-        {/* Rankings */}
-        <div className="card-soft overflow-hidden">
-          {entries.map((entry, i) => (
-            <motion.div
-              key={entry.rank}
-              initial={{ opacity: 0, x: -12 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.15 + i * 0.04 }}
-              className={`flex items-center gap-3 px-4 py-3.5 border-b border-border last:border-b-0 ${
-                entry.isYou ? "bg-primary/5" : ""
-              }`}
-            >
-              <span className="w-8 text-center font-display font-extrabold text-sm text-muted-foreground">
-                {getRankIcon(entry.rank) || `#${entry.rank}`}
-              </span>
-              <span className="text-xl">{entry.avatar}</span>
-              <div className="flex-1">
-                <span className={`text-sm font-semibold ${entry.isYou ? "text-primary" : "text-foreground"}`}>
-                  {entry.name}
+        <motion.section
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.12 }}
+          className="pb-6"
+        >
+          <span className="section-label">Your stats vs the average person</span>
+          <div className="mt-4 grid grid-cols-3 gap-3">
+            {comparisonStats.map((stat, index) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.16 + index * 0.04 }}
+                className="border-b border-border pb-3"
+              >
+                <p className="text-xs text-muted-foreground">{stat.label}</p>
+                <p className="mt-2 font-display text-[1.25rem] leading-none text-foreground">{stat.value}</p>
+                <p className="mt-1 text-[11px] text-muted-foreground">{stat.detail}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.16 }}
+        >
+          <div className="flex items-center justify-between gap-3">
+            <span className="section-label">Leaderboard</span>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setView("friends")}
+                className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
+                  view === "friends" ? "bg-primary/10 text-primary" : "text-muted-foreground"
+                }`}
+              >
+                Friends
+              </button>
+              <button
+                type="button"
+                onClick={() => setView("city")}
+                className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
+                  view === "city" ? "bg-primary/10 text-primary" : "text-muted-foreground"
+                }`}
+              >
+                Your city
+              </button>
+            </div>
+          </div>
+
+          <div className="mt-4">
+            {entries.map((entry, index) => (
+              <motion.div
+                key={`${view}-${entry.rank}-${entry.name}`}
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.18 + index * 0.04 }}
+                className={`flex items-center gap-3 border-b border-border px-1 py-3 last:border-b-0 ${
+                  entry.isYou ? "text-primary" : ""
+                }`}
+              >
+                <span className="w-8 text-center font-display text-sm font-extrabold text-muted-foreground">
+                  #{entry.rank}
                 </span>
-                <span className="text-xs text-muted-foreground ml-2">
-                  🔥 {entry.streak}d streak
-                </span>
-              </div>
-              <span className="font-display font-bold text-sm text-foreground">
-                {entry.co2} kg
-              </span>
-            </motion.div>
-          ))}
-        </div>
+                <img
+                  src={entry.avatarUrl}
+                  alt={`${entry.name} profile`}
+                  className="h-10 w-10 rounded-full border border-border object-cover"
+                />
+                <div className="flex-1">
+                  <p className={`text-sm font-semibold ${entry.isYou ? "text-primary" : "text-foreground"}`}>{entry.name}</p>
+                  <p className="text-xs text-muted-foreground">{entry.streak} day streak</p>
+                </div>
+                <span className="font-display text-sm font-bold text-foreground">{entry.co2} kg</span>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
       </div>
       <BottomNav />
     </div>
