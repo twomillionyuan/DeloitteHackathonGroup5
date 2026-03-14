@@ -57,6 +57,7 @@ export const DailyRecipeSuggestions = () => {
             <Link
               key={`${slot}-${recipe.id}`}
               to={`/recipes/${recipe.id}`}
+              state={{ from: "/" }}
               className="rounded-[22px] border border-border bg-background/75 p-3 transition-shadow hover:shadow-sm"
             >
               <div className="flex items-start gap-3">

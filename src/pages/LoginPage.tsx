@@ -14,7 +14,7 @@ export default function LoginPage() {
     try {
       if (isSignUp) await signUp(email, password, name);
       else await logIn(email, password);
-      navigate('/'); 
+      navigate('/setup-quiz'); // Redirect to quiz page after successful login
     } catch (e: any) {
       setError(e.message);
     }

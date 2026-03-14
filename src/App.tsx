@@ -10,6 +10,7 @@ import RecipesPage from "./pages/RecipesPage";
 import StatsPage from "./pages/StatsPage";
 import LeaderboardPage from "./pages/LeaderboardPage";
 import ProfilePage from "./pages/ProfilePage";
+import SetupQuizPage from "./pages/SetupQuizPage";
 import NotFound from "./pages/NotFound";
 import LoginPage from "./pages/LoginPage";
 
@@ -39,6 +40,7 @@ const App = () => (
           <Route path="/stats" element={<PrivateRoute><StatsPage /></PrivateRoute>} />
           <Route path="/leaderboard" element={<PrivateRoute><LeaderboardPage /></PrivateRoute>} />
           <Route path="/profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
+          <Route path="/setup-quiz" element={<PrivateRoute><SetupQuizPage /></PrivateRoute>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
