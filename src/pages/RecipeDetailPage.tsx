@@ -1,9 +1,9 @@
 import { BottomNav } from "../components/BottomNav";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
-import { ArrowLeft, Clock3, Leaf, Users } from "lucide-react";
+import { ArrowLeft, Clock3, Users } from "lucide-react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { getCo2Label, getRecipeById } from "../data/recipes";
+import { getRecipeById } from "../data/recipes";
 
 const RecipeDetailPage = () => {
   const { recipeId } = useParams();
@@ -12,9 +12,6 @@ const RecipeDetailPage = () => {
   if (!recipe) {
     return <Navigate to="/recipes" replace />;
   }
-
-  const co2Info = getCo2Label(recipe.co2);
-
   return (
     <div className="min-h-screen bg-background pb-24">
       <div className="mx-auto max-w-md px-4">
@@ -31,49 +28,31 @@ const RecipeDetailPage = () => {
             Back to recipes
           </Link>
 
-          <div
-            className="rounded-[28px] p-5 text-primary-foreground shadow-sm"
-            style={{ background: "var(--eco-gradient)" }}
-          >
-            <div className="flex items-start justify-between gap-4">
+          <div className="card-soft paper-panel p-5">
+            <div className="flex items-start justify-between gap-4 border-b border-border pb-4">
               <div>
-                <span className="section-label text-primary-foreground/80">{recipe.mealType}</span>
-                <h1 className="mt-2 font-display text-3xl font-extrabold">
+                <span className="section-label">{recipe.mealType}</span>
+                <h1 className="mt-2 font-display text-[2rem] leading-none text-foreground">
                   {recipe.emoji} {recipe.name}
                 </h1>
-                <p className="mt-2 text-sm text-primary-foreground/80">{recipe.desc}</p>
               </div>
-              <Leaf className="shrink-0" size={22} />
             </div>
 
             <div className="mt-4 flex flex-wrap gap-2">
-              <span className="inline-flex items-center gap-1 rounded-full bg-white/20 px-3 py-1 text-xs font-medium">
+              <span className="inline-flex items-center gap-1 rounded-full bg-background px-3 py-1 text-xs font-medium text-foreground">
                 <Clock3 size={12} />
                 {recipe.time}
               </span>
-              <span className="inline-flex items-center gap-1 rounded-full bg-white/20 px-3 py-1 text-xs font-medium">
+              <span className="inline-flex items-center gap-1 rounded-full bg-background px-3 py-1 text-xs font-medium text-foreground">
                 <Users size={12} />
                 {recipe.servings}
               </span>
-              <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-medium">
+              <span className="rounded-full bg-background px-3 py-1 text-xs font-medium text-foreground">
                 {recipe.co2} kg CO₂
               </span>
             </div>
           </div>
         </motion.header>
-
-        <motion.section
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="card-soft p-4"
-        >
-          <div className="flex items-center justify-between gap-3">
-            <span className="section-label">Why make this</span>
-            <Badge className={`rounded-full ${co2Info.className}`}>{co2Info.text}</Badge>
-          </div>
-          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{recipe.highlight}</p>
-        </motion.section>
 
         <motion.section
           initial={{ opacity: 0, y: 8 }}
@@ -100,7 +79,7 @@ const RecipeDetailPage = () => {
           <span className="section-label mb-3 block">Method</span>
           <div className="space-y-3">
             {recipe.steps.map((step, index) => (
-              <div key={step} className="flex gap-3 rounded-2xl bg-secondary/60 p-3">
+              <div key={step} className="paper-panel flex gap-3 rounded-2xl border border-border p-3">
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
                   {index + 1}
                 </span>
