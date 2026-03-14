@@ -7,6 +7,8 @@ import Dashboard from "./pages/Dashboard";
 import LeaderboardPage from "./pages/LeaderboardPage";
 import ScanPage from "./pages/ScanPage";
 import StatsPage from "./pages/StatsPage";
+import ConnectPage from "./pages/ConnectPage";
+import RewardsPage from "./pages/RewardsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
