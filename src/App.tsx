@@ -10,6 +10,7 @@ import RecipesPage from "./pages/RecipesPage";
 import StatsPage from "./pages/StatsPage";
 import LeaderboardPage from "./pages/LeaderboardPage";
 import ProfilePage from "./pages/ProfilePage";
+import SetupQuizPage from "./pages/SetupQuizPage";
 import NotFound from "./pages/NotFound";
 import LoginPage from "./pages/LoginPage";
 

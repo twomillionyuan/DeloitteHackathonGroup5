@@ -2,6 +2,7 @@ import { logOut } from "@/lib/auth";
 import { BottomNav } from "../components/BottomNav";
 import { motion } from "framer-motion";
 import { Leaf, Award, Share2, Heart, TreePine } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const badges = [
   { emoji: "🌱", label: "First Log", earned: true },
@@ -27,6 +28,15 @@ const ProfilePage = () => {
           <h1 className="font-display text-xl font-extrabold text-foreground">You</h1>
           <p className="text-sm text-muted-foreground mt-0.5">Eco warrior since March 2026</p>
         </motion.header>
+
+        <div className="mb-4 flex justify-center">
+          <Link
+            to="/setup-quiz"
+            className="rounded-full border border-border px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-foreground transition-colors hover:border-primary hover:text-primary"
+          >
+            Set up quiz
+          </Link>
+        </div>
 
         {/* Impact Summary */}
         <motion.div

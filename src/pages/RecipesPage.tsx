@@ -31,6 +31,7 @@ const RecipesPage = () => {
         >
           <Link
             to={`/recipes/${featuredRecipe.id}`}
+            state={{ from: "/recipes" }}
             className="card-soft paper-panel relative block overflow-hidden p-5 transition-transform hover:-translate-y-0.5"
           >
             <div className="relative z-10">
@@ -74,6 +75,7 @@ const RecipesPage = () => {
               >
                 <Link
                   to={`/recipes/${recipe.id}`}
+                  state={{ from: "/recipes" }}
                   className="card-soft block p-4 transition-shadow hover:shadow-md"
                 >
                   <div className="flex items-start gap-3">
