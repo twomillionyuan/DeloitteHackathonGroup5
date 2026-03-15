@@ -22,7 +22,7 @@ export const DailyTracker = () => {
       initial={{ opacity: 0, scale: 0.97 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ type: "spring", stiffness: 300, damping: 30, delay: 0.1 }}
-      className="mb-4 px-1 py-2"
+      className="mb-4 rounded-[17px] border border-border bg-white p-4"
     >
       <div className="flex items-center justify-between mb-4">
         <span className="section-label">Today's CO₂ emitted</span>

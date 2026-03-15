@@ -16,10 +16,11 @@ export default function LoginPage() {
       setError("");
       if (isSignUp) {
         await signUp(email, password, name);
+        navigate("/setup-quiz");
       } else {
         await logIn(email, password);
+        navigate("/");
       }
-      navigate("/");
     } catch (e: any) {
       setError(e.message);
     }
