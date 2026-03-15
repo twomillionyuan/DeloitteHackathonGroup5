@@ -65,7 +65,7 @@ const RecipesPage = () => {
           >
             {recommendedRecipeCards.map(({ label, recipe }, index) => (
               (() => {
-                const co2Info = getCo2Label(recipe.co2 ?? recipe.co2Kg ?? recipe.carbonEstimateKg ?? 0);
+                const co2Info = getCo2Label(recipe.co2?? 0);
                 return (
                   <div key={`${label}-${recipe.id}`} className="relative">
                     <button
@@ -96,7 +96,7 @@ const RecipesPage = () => {
                           </h2>
                           <div className="mt-4 flex flex-wrap items-center gap-2">
                             <span className={`rounded-full px-3 py-1 text-xs font-medium ${co2Info.className}`}>
-                              {(recipe.co2 ?? recipe.co2Kg ?? recipe.carbonEstimateKg ?? 0).toFixed(1)} kg CO₂
+                              {(recipe.co2 ?? 0).toFixed(1)} kg CO₂
                             </span>
                             <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
                               {recipe.time}

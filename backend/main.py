@@ -82,7 +82,8 @@ class RecipeResponse(BaseModel):
     leftoverPlan: str
     co2Kg: float
 
-SPOONACULAR_API_KEY = "06aaf30bf35f4c3eb0d630a87e37a0a5"
+SPOONACULAR_API_KEY1 = "06aaf30bf35f4c3eb0d630a87e37a0a5"
+SPOONACULAR_API_KEY = "321a39dd7778474997463193d3978df5"
 SPOONACULAR_URL = "https://api.spoonacular.com/recipes/complexSearch"
 API_KEY = "06aaf30bf35f4c3eb0d630a87e37a0a5"
 BASE = "https://api.spoonacular.com"
@@ -159,6 +160,7 @@ def map_recipe(item):
         "carbs": f'{round(nutrients.get("Carbohydrates", {}).get("amount", 0))}g',
         "fat": f'{round(nutrients.get("Fat", {}).get("amount", 0))}g',
     }
+
 @app.get("/daily-recipe")
 def daily_recipe(target_calories: int = 500):
     
@@ -170,7 +172,7 @@ def daily_recipe(target_calories: int = 500):
         "offset": random.randint(0, 50),
         "apiKey": API_KEY,
     }).json()
-    
+
     meat = random.choice(["chicken", "beef", "pork", "lamb", "turkey", "salmon"])
 
     non_vegan_search = requests.get(f"{BASE}/recipes/complexSearch", params={

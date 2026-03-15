@@ -5,9 +5,7 @@ const RECOMMENDED_RECIPE_OFFSET_KEYS = [
   "recommended-recipe-offset-0",
   "recommended-recipe-offset-1",
 ] as const;
-const RECOMMENDED_RECIPE_URL = import.meta.env.VITE_RECIPE_API_URL?.trim()
-  ? `${import.meta.env.VITE_RECIPE_API_URL.trim().replace(/\/$/, "")}/daily-recipe?target_calories=500`
-  : "";
+const RECOMMENDED_RECIPE_URL = "http://localhost:8000/daily-recipe?target_calories=500";
 
 type RemoteRecipe = Partial<Recipe> & {
   co2Kg?: number;
