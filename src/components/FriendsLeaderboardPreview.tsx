@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { ProfileAvatar } from "./ProfileAvatar";
 import { friendEntries } from "../data/leaderboard";
 
 export const FriendsLeaderboardPreview = () => {
@@ -20,6 +21,7 @@ export const FriendsLeaderboardPreview = () => {
         </div>
         <Link
           to="/leaderboard"
+          state={{ from: "/" }}
           className="inline-flex items-center gap-1 text-xs font-semibold text-primary transition-colors hover:text-foreground"
         >
           See all
@@ -34,23 +36,33 @@ export const FriendsLeaderboardPreview = () => {
             initial={{ opacity: 0, x: -12 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.14 + index * 0.04 }}
-            className="flex items-center gap-3 border-b border-border py-3 last:border-b-0"
+            className="border-b border-border last:border-b-0"
           >
-            <span className="w-8 text-center font-display text-sm font-bold text-muted-foreground">
-              #{entry.rank}
-            </span>
-            <img
-              src={entry.avatarUrl}
-              alt={`${entry.name} profile`}
-              className="h-10 w-10 rounded-full border border-border object-cover"
-            />
-            <div className="min-w-0 flex-1">
-              <p className={`text-sm font-semibold ${entry.isYou ? "text-primary" : "text-foreground"}`}>
-                {entry.name}
-              </p>
-              <p className="text-xs text-muted-foreground">{entry.streak} day streak</p>
-            </div>
-            <span className="font-display text-sm font-bold text-foreground">{entry.co2} kg</span>
+            <Link
+              to={entry.isYou ? "/profile" : `/people/${entry.id}`}
+              state={{ from: "/" }}
+              className="flex items-center gap-3 py-3"
+            >
+              <span className="w-8 text-center font-display text-sm font-bold text-muted-foreground">
+                #{entry.rank}
+              </span>
+              {entry.isYou ? (
+                <ProfileAvatar className="h-10 w-10 border border-border" />
+              ) : (
+                <img
+                  src={entry.avatarUrl}
+                  alt={`${entry.name} profile`}
+                  className="h-10 w-10 rounded-full border border-border object-cover"
+                />
+              )}
+              <div className="min-w-0 flex-1">
+                <p className={`text-sm font-semibold ${entry.isYou ? "text-primary" : "text-foreground"}`}>
+                  {entry.name}
+                </p>
+                <p className="text-xs text-muted-foreground">{entry.streak} day streak</p>
+              </div>
+              <span className="font-display text-sm font-bold text-foreground">{entry.co2} kg</span>
+            </Link>
           </motion.div>
         ))}
       </div>

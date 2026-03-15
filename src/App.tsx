@@ -9,7 +9,9 @@ import RecipeDetailPage from "./pages/RecipeDetailPage";
 import RecipesPage from "./pages/RecipesPage";
 import StatsPage from "./pages/StatsPage";
 import LeaderboardPage from "./pages/LeaderboardPage";
+import LeaderboardProfilePage from "./pages/LeaderboardProfilePage";
 import ProfilePage from "./pages/ProfilePage";
+import SettingsPage from "./pages/SettingsPage";
 import SetupQuizPage from "./pages/SetupQuizPage";
 import NotFound from "./pages/NotFound";
 import LoginPage from "./pages/LoginPage";
@@ -39,7 +41,9 @@ const App = () => (
           <Route path="/recipes/:recipeId" element={<PrivateRoute><RecipeDetailPage /></PrivateRoute>} />
           <Route path="/stats" element={<PrivateRoute><StatsPage /></PrivateRoute>} />
           <Route path="/leaderboard" element={<PrivateRoute><LeaderboardPage /></PrivateRoute>} />
+          <Route path="/people/:profileId" element={<PrivateRoute><LeaderboardProfilePage /></PrivateRoute>} />
           <Route path="/profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
+          <Route path="/settings" element={<PrivateRoute><SettingsPage /></PrivateRoute>} />
           <Route path="/setup-quiz" element={<PrivateRoute><SetupQuizPage /></PrivateRoute>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
