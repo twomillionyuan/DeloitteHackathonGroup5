@@ -3,6 +3,9 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { useAuth } from "../context/AuthContext";
 
 const QUIZ_STORAGE_KEY = "panda-setup-quiz";
 
@@ -171,6 +174,7 @@ const SelectionStep = ({
 };
 
 const SetupQuizPage = () => {
+  const { user } = useAuth();
   const navigate = useNavigate(); 
   const [step, setStep] = useState<QuizStep>("welcome");
   const [quizData, setQuizData] = useState<QuizData>(() => {
@@ -350,8 +354,10 @@ const SetupQuizPage = () => {
           )
         }
         onBack={() => setStep("allergies")}
-        onNext={() => {
+        onNext={async () => {
           localStorage.setItem("quizDone", "true");
+          await setDoc(doc(db, "users", user.uid), { co2Saved: 42 }, { merge: true })
+
           navigate("/");
           setStep("done")}}
         nextLabel="Save"
