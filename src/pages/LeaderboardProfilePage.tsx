@@ -19,7 +19,7 @@ const LeaderboardProfilePage = () => {
   if (!profile) {
     return <Navigate to="/leaderboard" replace />;
   }
-
+  
   return (
     <div className="min-h-screen bg-background pb-24">
       <div className="mx-auto max-w-md px-4">

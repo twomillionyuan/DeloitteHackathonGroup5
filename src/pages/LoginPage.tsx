@@ -19,7 +19,11 @@ export default function LoginPage() {
     } else {
       await logIn(email, password);
     }
-    navigate('/setup-quiz');
+    if (isSignUp) {
+   navigate('/setup-quiz'); // New users go to quiz setup first
+  } else {
+    navigate('/');
+  }
   } catch (e: any) {
     const code = e.code;
     if (code === "auth/wrong-password" || code === "auth/invalid-credential") setError("Wrong password, try again.");

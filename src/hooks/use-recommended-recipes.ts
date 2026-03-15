@@ -22,7 +22,7 @@ export const useRecommendedRecipes = () => {
   const [offset, setOffset] = useState(readStoredOffset);
   const [remoteRecipes, setRemoteRecipes] = useState<RemoteRecipe[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-
+  
   useEffect(() => {
     let cancelled = false;
 
