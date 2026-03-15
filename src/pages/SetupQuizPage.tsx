@@ -240,14 +240,11 @@ const SetupQuizPage = () => {
               transition={{ duration: 0.3 }}
               className="w-full"
             >
-              <div className="mx-auto max-w-[17rem]">
-                <h1 className="font-display text-[3rem] font-extrabold uppercase tracking-[-0.06em] text-foreground">
-                  PanDa
-                </h1>
-                <p className="-mt-1 text-xs font-bold uppercase tracking-[0.22em] text-foreground/70">
-                  Eat greener, your way
-                </p>
-              </div>
+              <img
+                src="/helping-you-make-right-choices.png"
+                alt="Helping you make right choices"
+                className="mx-auto max-w-[19rem]"
+              />
 
               <button
                 type="button"
@@ -265,7 +262,7 @@ const SetupQuizPage = () => {
               className="w-full"
             >
               <img
-                src="/favicon.svg"
+                src="/unknown.png"
                 alt="PanDa mascot"
                 className="mx-auto w-52 max-w-full"
               />
