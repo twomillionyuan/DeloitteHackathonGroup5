@@ -1,3 +1,5 @@
+import json
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -5,6 +7,7 @@ from typing import List
 import requests
 from fastapi import HTTPException, Query
 import random
+import os
 
 app = FastAPI()
 app.add_middleware(
@@ -83,6 +86,38 @@ SPOONACULAR_API_KEY = "06aaf30bf35f4c3eb0d630a87e37a0a5"
 SPOONACULAR_URL = "https://api.spoonacular.com/recipes/complexSearch"
 API_KEY = "06aaf30bf35f4c3eb0d630a87e37a0a5"
 BASE = "https://api.spoonacular.com"
+""" 
+def deserialize_response(self, response):
+
+        try:
+            if '```json' in response:
+                # Extract the JSON part from the response
+                response = response.split('```json')[1].split('```')[0].strip()
+
+            return json.loads(response)
+        except json.JSONDecodeError:
+            print(f"[{self.name}] Failed to parse JSON: {response}")
+            return None """
+# Call Openrouter api
+""" def call_openrouter(prompt,endpoint="https://openrouter.ai/api/v1"):
+
+    headers = {
+        "Authorization": f"Bearer {os.environ.get('openrouter_api_key')}",
+        "Content-Type": "application/json"
+    }
+    data = {
+        "model": "openai/gpt-oss-120b",
+        "messages": [{"role": "user", "content": prompt}],
+        "max_tokens": 256,
+    }
+    response = requests.post(endpoint, json=data, headers=headers)
+    if response.ok:
+        content = response.json()["choices"][0]["message"]["content"]
+        return deserialize_response(content)
+    else:
+        print(f"API call failed: {response.status_code} - {response.text}")
+        return None """
+
 
 def get_recipe_info(recipe_id):
     """Fetch full details including ingredients + instructions"""
@@ -125,6 +160,49 @@ def map_recipe(item):
         "fat": f'{round(nutrients.get("Fat", {}).get("amount", 0))}g',
     }
 @app.get("/daily-recipe")
+def daily_recipe(target_calories: int = 500):
+    
+    margin = 150
+
+    vegan_search = requests.get(f"{BASE}/recipes/complexSearch", params={
+        "diet": "vegetarian",
+        "number": 5,
+        "offset": random.randint(0, 50),
+        "apiKey": API_KEY,
+    }).json()
+    
+    meat = random.choice(["chicken", "beef", "pork", "lamb", "turkey", "salmon"])
+
+    non_vegan_search = requests.get(f"{BASE}/recipes/complexSearch", params={
+        "number": 5,
+        "offset": random.randint(0, 100),
+        "includeIngredients": meat,
+        "apiKey": API_KEY,
+    }).json()
+
+    if not vegan_search["results"] or not non_vegan_search["results"]:
+        raise HTTPException(status_code=404, detail="No recipes found")
+
+    def top_matches(results, n=3):
+        infos = [get_recipe_info(r["id"]) for r in results]
+        infos = [i for i in infos if i is not None]
+        def cal(item):
+            nutrients = {n["name"]: n for n in item.get("nutrition", {}).get("nutrients", [])}
+            return nutrients.get("Calories", {}).get("amount", 0)
+        sorted_infos = sorted(infos, key=lambda x: abs(cal(x) - target_calories))
+        return sorted_infos[:n]
+
+    vegan_top = top_matches(vegan_search["results"])
+    non_vegan_top = top_matches(non_vegan_search["results"])
+
+    results = []
+    for v, nv in zip(vegan_top, non_vegan_top):
+        results.append(map_recipe(v))
+        results.append(map_recipe(nv))
+
+    return results
+
+@app.get("/daily-recipev1")
 def daily_recipe(target_calories: int = 500):
     return mockdata
     margin = 150
