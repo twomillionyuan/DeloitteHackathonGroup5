@@ -15,7 +15,7 @@ const RecipesPage = () => {
   const {
     recommendedRecipes: syncedRecommendedRecipes,
     isLoading,
-    generateOtherRecipes,
+    refreshRecipe,
   } = useRecommendedRecipes();
   const recommendedRecipeCards = [
     { label: "Recommended 1", recipe: syncedRecommendedRecipes[0] },
@@ -51,14 +51,6 @@ const RecipesPage = () => {
 
         <div className="mb-3 flex items-center justify-between gap-3">
           <span className="section-label">Suggested recipes</span>
-          <button
-            type="button"
-            onClick={generateOtherRecipes}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-secondary text-foreground transition-colors hover:border-primary hover:text-primary"
-            aria-label="Generate other recipes"
-          >
-            <RotateCw size={16} />
-          </button>
         </div>
 
         {/* Recommended dishes */}
@@ -71,45 +63,54 @@ const RecipesPage = () => {
             transition={{ delay: 0.1 }}
             className="mb-4 grid gap-3"
           >
-            {recommendedRecipeCards.map(({ label, recipe }) => (
+            {recommendedRecipeCards.map(({ label, recipe }, index) => (
               (() => {
                 const co2Info = getCo2Label(recipe.co2 ?? recipe.co2Kg ?? recipe.carbonEstimateKg ?? 0);
                 return (
-                  <Link
-                    key={`${label}-${recipe.id}`}
-                    to={`/recipes/${recipe.id}`}
-                    state={{ from: "/recipes" }}
-                    className="card-soft paper-panel relative block overflow-hidden p-5 transition-transform hover:-translate-y-0.5"
-                  >
-                    <div className="relative z-10 flex items-stretch gap-4">
-                      <div className="h-[120px] w-[120px] shrink-0 overflow-hidden rounded-[16px]">
-                        <img
-                          src={recipe.image}
-                          alt={recipe.name}
-                          className="h-full w-full object-cover"
-                        />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <span className="section-label">{label}</span>
-                        <h2 className="mt-2 font-display text-[1.45rem] leading-tight text-foreground">
-                          {recipe.name}
-                        </h2>
-                        <div className="mt-4 flex flex-wrap items-center gap-2">
-                          <span className={`rounded-full px-3 py-1 text-xs font-medium ${co2Info.className}`}>
-                            {(recipe.co2 ?? recipe.co2Kg ?? recipe.carbonEstimateKg ?? 0).toFixed(1)} kg CO₂
-                          </span>
-                          <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                            {recipe.time}
-                          </span>
-                          {recipe.tags?.[0] ? (
-                            <span className="rounded-full bg-secondary px-3 py-1 text-xs font-medium text-foreground">
-                              {recipe.tags[0]}
+                  <div key={`${label}-${recipe.id}`} className="relative">
+                    <button
+                      type="button"
+                      onClick={() => refreshRecipe(index)}
+                      className="absolute right-5 top-5 z-20 inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-secondary text-foreground transition-colors hover:border-primary hover:text-primary"
+                      aria-label={`Refresh ${label.toLowerCase()}`}
+                    >
+                      <RotateCw size={14} />
+                    </button>
+                    <Link
+                      to={`/recipes/${recipe.id}`}
+                      state={{ from: "/recipes" }}
+                      className="relative block overflow-hidden rounded-[17px] border border-border bg-white p-5 pr-16 transition-transform hover:-translate-y-0.5"
+                    >
+                      <div className="relative z-10 flex items-stretch gap-4">
+                        <div className="h-[120px] w-[120px] shrink-0 overflow-hidden rounded-[16px]">
+                          <img
+                            src={recipe.image}
+                            alt={recipe.name}
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <span className="section-label">{label}</span>
+                          <h2 className="mt-2 font-display text-[1.45rem] leading-tight text-foreground">
+                            {recipe.name}
+                          </h2>
+                          <div className="mt-4 flex flex-wrap items-center gap-2">
+                            <span className={`rounded-full px-3 py-1 text-xs font-medium ${co2Info.className}`}>
+                              {(recipe.co2 ?? recipe.co2Kg ?? recipe.carbonEstimateKg ?? 0).toFixed(1)} kg CO₂
                             </span>
-                          ) : null}
+                            <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                              {recipe.time}
+                            </span>
+                            {recipe.tags?.[0] ? (
+                              <span className="rounded-full bg-secondary px-3 py-1 text-xs font-medium text-foreground">
+                                {recipe.tags[0]}
+                              </span>
+                            ) : null}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </Link>
+                    </Link>
+                  </div>
                 );
               })()
             ))}
@@ -181,7 +182,7 @@ const RecipesPage = () => {
                       <Link
                         to={`/recipes/${recipe.id}`}
                         state={{ from: "/recipes" }}
-                        className="card-soft block p-4 transition-shadow hover:shadow-md"
+                        className="block rounded-[17px] border border-border bg-white p-4 transition-shadow hover:shadow-md"
                       >
                         <div className="flex items-stretch gap-4">
                           <div className="h-[120px] w-[120px] shrink-0 overflow-hidden rounded-[16px]">

@@ -8,7 +8,11 @@ import { generatePantryRecipe, parsePantryIngredients, type PantryRecipe } from 
 
 const hasApiConfigured = Boolean(import.meta.env.VITE_RECIPE_API_URL?.trim());
 
-export const PantryRecipeGenerator = () => {
+interface PantryRecipeGeneratorProps {
+  compact?: boolean;
+}
+
+export const PantryRecipeGenerator = ({ compact = false }: PantryRecipeGeneratorProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
   const [recipe, setRecipe] = useState<PantryRecipe | null>(null);
@@ -35,7 +39,7 @@ export const PantryRecipeGenerator = () => {
   };
 
   return (
-    <section className="mt-4">
+    <section className={compact ? "mt-3" : "mt-4"}>
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -46,8 +50,8 @@ export const PantryRecipeGenerator = () => {
           <div className="flex justify-center">
             <Button
               type="button"
-              size="lg"
-              className="rounded-full px-6"
+              size={compact ? "default" : "lg"}
+              className={`rounded-full ${compact ? "px-5 py-2.5 text-xs" : "px-6"}`}
               onClick={() => setIsOpen(true)}
             >
               <Sparkles />

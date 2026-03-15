@@ -2,7 +2,7 @@ import { useState } from "react";
 import { logOut } from "@/lib/auth";
 import { BottomNav } from "../components/BottomNav";
 import { motion } from "framer-motion";
-import { Leaf, Heart, Settings, Share2, TreePine, UserPlus, X } from "lucide-react";
+import { Leaf, Heart, Settings, Share, TreePine, UserPlus, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { friendEntries } from "../data/leaderboard";
 
@@ -53,21 +53,21 @@ const ProfilePage = () => {
         <motion.header
           initial={{ opacity: 0, y: -12 }}
           animate={{ opacity: 1, y: 0 }}
-          className="pt-10 pb-4 text-center"
+          className="pt-6 pb-3 text-center"
         >
           <img
             src="/helping-you-make-right-choices.png"
             alt="Helping you make right choices"
-            className="mx-auto mb-5 max-w-[15rem]"
+            className="mx-auto mb-3 max-w-[12rem]"
           />
           <img
-            src="/avatars/IMG_6266.jpg"
+            src="/avatars/IMG_6220.jpeg"
             alt="Profile photo"
-            className="mx-auto mb-4 h-40 w-40 rounded-full object-cover"
+            className="mx-auto mb-3 h-28 w-28 rounded-full object-cover"
           />
-          <h1 className="font-display text-xl font-extrabold text-foreground">You</h1>
+          <h1 className="font-display text-[1.1rem] font-extrabold text-foreground">You</h1>
           <p className="text-sm text-muted-foreground mt-0.5">Eco warrior since March 2026</p>
-          <div className="mt-3 flex items-center justify-center gap-6">
+          <div className="mt-2 flex items-center justify-center gap-5">
             <button
               type="button"
               onClick={() => setConnectionsView("following")}
@@ -87,20 +87,22 @@ const ProfilePage = () => {
           </div>
         </motion.header>
 
-        <div className="mb-4 flex items-center justify-center gap-3">
-          <Link
-            to="/setup-quiz"
-            className="rounded-full border border-border px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-foreground transition-colors hover:border-primary hover:text-primary"
-          >
-            Set up quiz
-          </Link>
-          <Link
-            to="/settings"
-            className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-foreground transition-colors hover:border-primary hover:text-primary"
-          >
-            <Settings size={14} />
-            Settings
-          </Link>
+        <div className="mb-3 rounded-[17px] border border-border bg-white p-3">
+          <div className="flex items-center justify-center gap-2">
+            <Link
+              to="/setup-quiz"
+              className="rounded-full border border-border px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-foreground transition-colors hover:border-primary hover:text-primary"
+            >
+              Set up quiz
+            </Link>
+            <Link
+              to="/settings"
+              className="inline-flex items-center gap-1.5 rounded-full border border-border px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-foreground transition-colors hover:border-primary hover:text-primary"
+            >
+              <Settings size={12} />
+              Settings
+            </Link>
+          </div>
         </div>
 
         {/* Impact Summary */}
@@ -108,23 +110,23 @@ const ProfilePage = () => {
           initial={{ opacity: 0, scale: 0.97 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.1 }}
-          className="card-soft p-5 mb-4"
+          className="mb-3 rounded-[17px] border border-border bg-white p-3"
         >
-          <span className="section-label mb-3 block">Total Impact</span>
-          <div className="grid grid-cols-3 gap-4 text-center">
+          <span className="section-label mb-2 block">Total Impact</span>
+          <div className="grid grid-cols-3 gap-3 text-center">
             <div>
-              <TreePine size={18} className="text-eco-good mx-auto mb-1" />
-              <p className="font-display text-xl font-extrabold text-foreground">42</p>
+              <TreePine size={16} className="text-eco-good mx-auto mb-1" />
+              <p className="font-display text-[1.1rem] font-extrabold text-foreground">42</p>
               <p className="text-[10px] text-muted-foreground">kg CO₂ saved</p>
             </div>
             <div>
-              <Heart size={18} className="text-primary mx-auto mb-1" />
-              <p className="font-display text-xl font-extrabold text-foreground">89</p>
+              <Heart size={16} className="text-primary mx-auto mb-1" />
+              <p className="font-display text-[1.1rem] font-extrabold text-foreground">89</p>
               <p className="text-[10px] text-muted-foreground">meals logged</p>
             </div>
             <div>
-              <Heart size={18} className="text-accent mx-auto mb-1" />
-              <p className="font-display text-xl font-extrabold text-foreground">{following.length}</p>
+              <Heart size={16} className="text-accent mx-auto mb-1" />
+              <p className="font-display text-[1.1rem] font-extrabold text-foreground">{following.length}</p>
               <p className="text-[10px] text-muted-foreground">following</p>
             </div>
           </div>
@@ -135,7 +137,7 @@ const ProfilePage = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="card-soft p-4 mt-4"
+          className="mt-3 rounded-[17px] border border-border bg-white p-3"
         >
           <div className="flex items-start gap-3">
             <Leaf size={16} className="text-eco-good mt-0.5 shrink-0" />
@@ -146,28 +148,30 @@ const ProfilePage = () => {
           </div>
         </motion.div>
 
-        {/* Share */}
-        <motion.button
+        <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.45 }}
-          whileTap={{ scale: 0.98 }}
-          className="mx-auto flex w-fit items-center justify-center gap-2 rounded-full border border-border bg-secondary px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:border-primary hover:text-primary"
+          className="mt-3 rounded-[17px] border border-border bg-white p-3"
         >
-          <Share2 size={16} />
-          Share your impact with friends
-        </motion.button>
+          <div className="flex flex-col items-center gap-2.5">
+            <button
+              type="button"
+              className="mx-auto flex w-fit items-center justify-center gap-2 rounded-full border border-border bg-secondary px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:border-primary hover:text-primary"
+            >
+              <Share size={16} />
+              Share your impact with friends
+            </button>
 
-        <motion.button
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={logOut}
-          className="mx-auto mt-3 flex w-fit items-center justify-center gap-2 rounded-full border border-border bg-secondary px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:border-primary hover:text-primary"
-        >
-          Log out
-        </motion.button>
+            <button
+              type="button"
+              onClick={logOut}
+              className="mx-auto flex w-fit items-center justify-center gap-2 rounded-full border border-border bg-secondary px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:border-primary hover:text-primary"
+            >
+              Log out
+            </button>
+          </div>
+        </motion.div>
       </div>
 
       {connectionsView ? (

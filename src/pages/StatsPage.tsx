@@ -55,7 +55,7 @@ const StatsPage = () => {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 + i * 0.05 }}
-                className="card-soft p-4"
+                className="rounded-[17px] border border-border bg-white p-4"
               >
                 <div className="flex items-center gap-2 mb-2">
                   <Icon size={14} className="text-primary" />
@@ -79,6 +79,7 @@ const StatsPage = () => {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
+          className="rounded-[17px] border border-border bg-white p-4"
         >
           <span className="section-label mb-3 block">CO₂ Per Meal Comparison</span>
           <div className="space-y-2">
@@ -88,7 +89,7 @@ const StatsPage = () => {
                 initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.45 + i * 0.04 }}
-                className="card-soft p-3 flex items-center gap-3"
+                className="flex items-center gap-3 rounded-[17px] border border-border bg-white p-3"
               >
                 <span className="text-2xl">{item.emoji}</span>
                 <span className="flex-1 text-sm font-medium text-foreground">{item.item}</span>
