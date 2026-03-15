@@ -356,7 +356,12 @@ const SetupQuizPage = () => {
         onBack={() => setStep("allergies")}
         onNext={async () => {
           localStorage.setItem("quizDone", "true");
-          await setDoc(doc(db, "users", user.uid), { co2Saved: 42 }, { merge: true })
+          await setDoc(doc(db, "users", user!.uid), {
+            quizDone: true,
+            preferences: quizData.preferences,
+            allergies: quizData.allergies,
+            cuisines: quizData.cuisines,
+          }, { merge: true });
 
           navigate("/");
           setStep("done")}}
