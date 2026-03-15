@@ -186,6 +186,25 @@ export const recipes: Recipe[] = [
       "Toss everything with soy sauce and the noodles until glossy and hot.",
     ],
   },
+  {
+    id: "10",
+    name: "Turkey Pesto Pasta",
+    desc: "Turkey mince pasta with basil pesto and roasted tomatoes",
+    co2: 1.0,
+    time: "22 min",
+    servings: "2 servings",
+    tags: ["Meat", "Quick"],
+    emoji: "🍝",
+    image: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=900&q=80",
+    mealType: "Dinner",
+    highlight: "A fast meat option with a lighter footprint than beef.",
+    ingredients: ["turkey mince", "penne", "basil pesto", "cherry tomatoes", "spinach", "parmesan"],
+    steps: [
+      "Cook the pasta until al dente and reserve a splash of pasta water.",
+      "Brown the turkey mince, then add tomatoes until they start to burst.",
+      "Stir in pesto, spinach, and pasta, loosening with pasta water before serving.",
+    ],
+  },
 ];
 
 export const getCo2Label = (co2: number) => {

@@ -51,9 +51,9 @@ const LeaderboardPage = () => {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.08 }}
-          className="pb-5"
+          className="mb-3 rounded-[17px] border border-border bg-white p-4"
         >
-          <div className="flex items-end justify-between gap-3 border-b border-border pb-4">
+          <div className="flex items-end justify-between gap-3">
             <div>
               <span className="section-label">Your place</span>
               <p className="mt-2 font-display text-[1.9rem] leading-none text-foreground">#{you.rank}</p>
@@ -69,7 +69,7 @@ const LeaderboardPage = () => {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.12 }}
-          className="pb-6"
+          className="mb-3 rounded-[17px] border border-border bg-white p-4"
         >
           <span className="section-label">Stats</span>
           <div className="mt-4 grid grid-cols-3 gap-3">
@@ -93,6 +93,7 @@ const LeaderboardPage = () => {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.16 }}
+          className="rounded-[17px] border border-border bg-white p-4"
         >
           <div className="flex items-center justify-between gap-3">
             <span className="section-label">Leaderboard</span>

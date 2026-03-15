@@ -102,6 +102,18 @@ const RecipeDetailPage = () => {
                   {recipe.name}
                 </h1>
               </div>
+              <button
+                type="button"
+                onClick={handleLogMeal}
+                className={`inline-flex shrink-0 items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-colors ${
+                  isLogged
+                    ? "border-primary bg-primary/10 text-primary"
+                    : "border-border bg-secondary text-foreground hover:border-primary hover:text-primary"
+                }`}
+              >
+                {isLogged ? <Check size={16} /> : null}
+                {isLogged ? "Meal logged" : "Log meal"}
+              </button>
             </div>
 
             <div className="mt-4 flex flex-wrap gap-2">
@@ -148,20 +160,6 @@ const RecipeDetailPage = () => {
               </div>
             </div>
 
-            <div className="mt-4">
-              <button
-                type="button"
-                onClick={handleLogMeal}
-                className={`inline-flex items-center gap-2 rounded-full border px-5 py-3 text-sm font-semibold transition-colors ${
-                  isLogged
-                    ? "border-primary bg-primary/10 text-primary"
-                    : "border-border bg-secondary text-foreground hover:border-primary hover:text-primary"
-                }`}
-              >
-                {isLogged ? <Check size={16} /> : null}
-                {isLogged ? "Meal logged" : "Log meal"}
-              </button>
-            </div>
           </div>
         </motion.header>
 
